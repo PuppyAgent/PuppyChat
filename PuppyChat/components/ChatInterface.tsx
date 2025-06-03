@@ -114,15 +114,15 @@ export default function ChatInterface() {
           <MessageBubble key={message.id} message={message} />
         ))}
         {isTyping && (
-          <div className="flex justify-start mb-4">
-            <div className="px-4 py-3 rounded-xl bg-gradient-to-r from-[#2a2a2a] to-[#333333] text-white border border-[#444] min-w-[80px] shadow-lg">
-              <div className="flex items-center space-x-2 h-5">
-                <div className="w-2 h-2 bg-[#4a90e2] rounded-full animate-pulse" style={{animationDuration: "1s"}}></div>
-                <div className="w-2 h-2 bg-[#4a90e2] rounded-full animate-pulse" style={{animationDuration: "1s", animationDelay: "0.3s"}}></div>
-                <div className="w-2 h-2 bg-[#4a90e2] rounded-full animate-pulse" style={{animationDuration: "1s", animationDelay: "0.6s"}}></div>
-              </div>
-            </div>
-          </div>
+          <MessageBubble 
+            message={{
+              id: 'typing',
+              content: '',
+              sender: 'bot',
+              timestamp: new Date()
+            }}
+            isTyping={true}
+          />
         )}
         <div ref={messagesEndRef} />
       </div>

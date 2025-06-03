@@ -10,9 +10,10 @@ interface Message {
 
 interface MessageBubbleProps {
   message: Message
+  isTyping?: boolean
 }
 
-export default function MessageBubble({ message }: MessageBubbleProps) {
+export default function MessageBubble({ message, isTyping = false }: MessageBubbleProps) {
   const isBot = message.sender === 'bot'
   
   return (
@@ -21,7 +22,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
       isBot ? 'justify-start' : 'justify-start flex-row-reverse space-x-reverse'
     )}>
       {/* Avatar */}
-      <div className="flex items-center justify-center flex-shrink-0 mt-2">
+      <div className="flex items-center justify-center flex-shrink-0 mt-3">
         {isBot ? (
           <Bot className={clsx(
             'w-5 h-5',
@@ -42,16 +43,26 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
           ? 'bg-gradient-to-r from-[#2a2a2a] to-[#333333] text-[#e5e5e5] border border-[#444] bot-bubble' 
           : 'bg-gradient-to-r from-[#4a90e2] to-[#5ba0f2] text-white user-bubble'
       )}>
-        <p className="text-sm whitespace-pre-wrap leading-relaxed">{message.content}</p>
-        <p className={clsx(
-          'text-xs mt-2 opacity-70',
-          isBot ? 'text-[#a0a0a0]' : 'text-white'
-        )}>
-          {message.timestamp.toLocaleTimeString('zh-CN', { 
-            hour: '2-digit', 
-            minute: '2-digit' 
-          })}
-        </p>
+        {isTyping ? (
+          <div className="flex items-center space-x-2 h-5">
+            <div className="w-2 h-2 bg-[#4a90e2] rounded-full animate-pulse" style={{animationDuration: "1s"}}></div>
+            <div className="w-2 h-2 bg-[#4a90e2] rounded-full animate-pulse" style={{animationDuration: "1s", animationDelay: "0.3s"}}></div>
+            <div className="w-2 h-2 bg-[#4a90e2] rounded-full animate-pulse" style={{animationDuration: "1s", animationDelay: "0.6s"}}></div>
+          </div>
+        ) : (
+          <>
+            <p className="text-sm whitespace-pre-wrap leading-relaxed">{message.content}</p>
+            <p className={clsx(
+              'text-xs mt-2 opacity-70',
+              isBot ? 'text-[#a0a0a0]' : 'text-white'
+            )}>
+              {message.timestamp.toLocaleTimeString('zh-CN', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+              })}
+            </p>
+          </>
+        )}
       </div>
 
       <style jsx>{`
@@ -59,7 +70,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
         .message-bubble::after {
           content: '';
           position: absolute;
-          top: 12px;
+          top: 16px;
           width: 0;
           height: 0;
           border-style: solid;
