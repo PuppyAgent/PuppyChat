@@ -1,6 +1,6 @@
 # PuppyChat
 
-![PuppyChat Logo](./puppychatlogo.png)
+![PuppyChat Logo](./assert/puppychatlogo.png)
 
 React SDK for building AI chatbot interfaces
 
@@ -55,7 +55,7 @@ export default App
 
 ### Preview
 
-![Chat Interface Preview](./chatinterface.png)
+![Chat Interface Preview](./assert/chatinterface.png)
 
 
 ## Styling
