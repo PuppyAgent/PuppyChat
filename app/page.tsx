@@ -1,15 +1,15 @@
 'use client'
 
 import React from 'react'
-// 直接从源文件导入，实时反映修改
+// Import directly from source file to reflect real-time changes
 import ChatInterface from '../lib/components/ChatInterface'
 
 export default function DevTestPage() {
   const handleSendMessage = async (message: string) => {
-    // 模拟延迟
+    // Simulate delay
     await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000))
     
-    // 测试不同场景
+    // Test different scenarios
     if (message.toLowerCase().includes('error')) {
       throw new Error('Testing error handling')
     }
@@ -30,9 +30,8 @@ export default function DevTestPage() {
       height: '100vh', 
       backgroundColor: 'black',
       display: 'flex',
-      alignItems: 'flex-start',
-      justifyContent: 'center',
-      paddingTop: '20px'
+      alignItems: 'center',
+      justifyContent: 'center'
     }}>
       <ChatInterface
         onSendMessage={handleSendMessage}

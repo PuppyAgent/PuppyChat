@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { ChatInterface, Message } from 'puppychat-react-sdk'
 
-// 基础使用示例
+// Basic usage example
 export const BasicExample = () => {
   const handleSendMessage = async (message: string) => {
-    // 模拟 API 调用
+    // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000))
     return `Echo: ${message}`
   }
@@ -20,7 +20,7 @@ export const BasicExample = () => {
   )
 }
 
-// 高级使用示例
+// Advanced usage example
 export const AdvancedExample = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -32,7 +32,7 @@ export const AdvancedExample = () => {
   ])
 
   const handleSendMessage = async (message: string) => {
-    // 模拟智能回复
+    // Simulate intelligent responses
     const responses = [
       "That's interesting! Tell me more.",
       "I understand what you mean.",

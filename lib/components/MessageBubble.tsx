@@ -147,7 +147,7 @@ export default function MessageBubble({ message, isTyping = false }: MessageBubb
           )}
         </div>
         
-        {/* Timestamp - 显示在气泡下方 */}
+        {/* Timestamp - Display below the bubble */}
         {!isTyping && (
           <div style={styles.timestamp}>
             {message.timestamp.toLocaleTimeString('en-US', { 

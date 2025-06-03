@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Send, Bot, User, Trash2 } from 'lucide-react'
 import MessageBubble from './MessageBubble'
 
-// 导出 Message 接口
+// Export Message interface
 export interface Message {
   id: string
   content: string
@@ -12,7 +12,7 @@ export interface Message {
   timestamp: Date
 }
 
-// 添加组件 Props 接口
+// Add component Props interface
 export interface ChatInterfaceProps {
   onSendMessage?: (message: string) => Promise<string> | string
   initialMessages?: Message[]
@@ -36,7 +36,7 @@ export default function ChatInterface({
   height = '800px',
   welcomeMessage = "Hello! I am PuppyChat AI assistant. How can I help you?"
 }: ChatInterfaceProps = {}) {
-  // 使用 welcomeMessage 创建默认的初始消息
+  // Create default initial messages using welcomeMessage
   const defaultInitialMessages = [
     {
       id: '1',
@@ -123,7 +123,7 @@ export default function ChatInterface({
     ])
   }
 
-  // 内联样式对象
+  // Inline styles object
   const styles = {
     container: {
       display: 'flex',
