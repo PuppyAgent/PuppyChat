@@ -1,0 +1,27 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+      "outDir": "../dist",
+      "declaration": true,
+      "declarationMap": true,
+      "sourceMap": true,
+      "removeComments": false,
+      "skipLibCheck": true,
+      "jsx": "react-jsx",
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true
+    },
+    "include": [
+      "index.ts",
+      "../components/**/*"
+, "components/ChatInterface.tsx", "components/MessageBubble.tsx"    ],
+    "exclude": [
+      "../node_modules",
+      "../dist",
+      "example.tsx",
+      "**/*.test.tsx",
+      "**/*.test.ts",
+      "**/*.stories.tsx"
+    ]
+  }

@@ -1,0 +1,49 @@
+{
+  "name": "puppychat-react-sdk",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A beautiful React chat interface component with TypeScript support",
+  "main": "../dist/index.js",
+  "module": "../dist/index.esm.js",
+  "types": "../dist/index.d.ts",
+  "files": [
+    "../dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react",
+    "chat",
+    "ui",
+    "component",
+    "typescript",
+    "chat-interface",
+    "messaging",
+    "puppychat"
+  ],
+  "author": "PuppyChat Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/puppychat-react-sdk.git"
+  },
+  "homepage": "https://github.com/your-username/puppychat-react-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/your-username/puppychat-react-sdk/issues"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "lucide-react": "^0.292.0",
+    "clsx": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
