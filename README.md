@@ -15,7 +15,6 @@
 - 📱 **Mobile App Integration**: Add conversational AI to mobile applications
 - 🌐 **Website Enhancement**: Improve user engagement with interactive chat features
 
-
 ## Installation
 
 ```bash
@@ -28,7 +27,19 @@ or
 yarn add puppychat-react-sdk
 ```
 
-## Quick Start
+## Components
+
+PuppyChat provides two main components for different use cases:
+
+### 1. ChatInterface - Full Chat Interface
+
+A complete chat interface component for embedding directly in your application.
+
+<div align="center">
+  <img src="./assert/chatinterface.png" alt="Chat Interface Preview" width="800">
+</div>
+
+
 
 ```tsx
 import React from 'react'
@@ -46,6 +57,9 @@ function App() {
         onSendMessage={handleSendMessage}
         title="My Chat Bot"
         welcomeMessage="Hello! How can I help you today?"
+        width="600px"
+        height="500px"
+        placeholder="Type your message..."
       />
     </div>
   )
@@ -54,29 +68,91 @@ function App() {
 export default App
 ```
 
-### Preview
+#### ChatInterface Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `onSendMessage` | `(message: string) => Promise<string> \| string` | - | Function to handle sending messages |
+| `initialMessages` | `Message[]` | - | Initial messages to display |
+| `placeholder` | `string` | `"Type your message..."` | Input placeholder text |
+| `title` | `string` | `"PuppyChat"` | Chat interface title |
+| `className` | `string` | `""` | Additional CSS class |
+| `disabled` | `boolean` | `false` | Disable the chat interface |
+| `width` | `string \| number` | `'80vw'` | Interface width |
+| `height` | `string \| number` | `'800px'` | Interface height |
+| `welcomeMessage` | `string` | `"Hello! I am PuppyChat AI assistant. How can I help you?"` | Initial welcome message |
+
+### 2. ChatBubble - Floating Chat Widget
+
+A floating chat bubble that can be positioned anywhere on your page, perfect for customer support widgets.
 
 <div align="center">
-  <img src="./assert/chatinterface.png" alt="Chat Interface Preview" width="800">
+  <img src="./assert/chatbubble.png" alt="Chat Interface Preview" width="800">
 </div>
 
-
-## Styling
-
-The component uses inline styles for maximum compatibility and doesn't require any external CSS. However, you can customize the appearance by:
-
-1. **Using the className prop** to add custom styles
-2. **Overriding with CSS** using higher specificity
-3. **Modifying the width and height props** for sizing
-
 ```tsx
-<ChatInterface
-  className="my-custom-chat"
-  width="100%"
-  height="500px"
-  // ... other props
-/>
+import React from 'react'
+import { ChatBubble } from 'puppychat-react-sdk'
+
+function App() {
+  const handleSendMessage = async (message: string) => {
+    // Your message handling logic here
+    return `Echo: ${message}`
+  }
+
+  return (
+    <div style={{ height: '100vh' }}>
+      {/* Your page content */}
+      <h1>Welcome to my website</h1>
+      
+      {/* Floating chat bubble */}
+      <ChatBubble
+        chatProps={{
+          onSendMessage: handleSendMessage,
+          title: "Support Chat",
+          welcomeMessage: "Hi! How can we help you today?",
+          width: '400px',
+          height: '500px'
+        }}
+        bubbleProps={{
+          size: 60,
+          pulseAnimation: true
+        }}
+        position="bottom-right"
+        enableOverlay={true}
+        overlayOpacity={0.3}
+        animationDuration={300}
+      />
+    </div>
+  )
+}
+
+export default App
 ```
+
+#### ChatBubble Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `chatProps` | `Omit<ChatInterfaceProps, 'className'>` | `{}` | Props for the chat interface |
+| `bubbleProps` | `Omit<FloatingBubbleProps, 'onClick' \| 'isOpen'>` | `{}` | Props for the floating bubble |
+| `defaultOpen` | `boolean` | `false` | Whether chat starts open |
+| `animationDuration` | `number` | `300` | Animation duration in ms |
+| `overlayOpacity` | `number` | `0.3` | Background overlay opacity |
+| `enableOverlay` | `boolean` | `true` | Show background overlay when open |
+| `onStateChange` | `(isOpen: boolean) => void` | - | Callback when chat opens/closes |
+| `position` | `'bottom-right' \| 'bottom-left' \| 'top-right' \| 'top-left'` | `'bottom-right'` | Bubble position |
+| `chatOffset` | `{ x: number; y: number }` | `{ x: 0, y: 0 }` | Chat position offset |
+
+#### FloatingBubble Props (for bubbleProps)
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `size` | `number` | `60` | Bubble size in pixels |
+| `pulseAnimation` | `boolean` | `true` | Enable pulse animation |
+| `className` | `string` | `""` | Additional CSS class |
+
+### Preview
 
 ## Development
 
@@ -101,12 +177,9 @@ The project includes a development test page at `/` where you can test the compo
 - Error handling (test with "error")
 - Greeting responses (test with "hello")
 
-
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 
 ## Changelog
 
@@ -116,4 +189,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - TypeScript support
 - Customizable welcome messages
 - Dark theme design
-- Responsive layout 
+- Responsive layout
+- Floating chat bubble widget
+- Multiple positioning options
+- Overlay and animation support 
