@@ -1,9 +1,10 @@
-# PuppyChat
+<div align="center">
+      <img src="./assert/puppychatlogo.png" alt="PuppyChat Logo" height="120">
+    <h1 align="center">PuppyChat</h1>
 
-![PuppyChat Logo](./assert/puppychatlogo.png)
+**React SDK for building AI chatbot interfaces**
 
-React SDK for building AI chatbot interfaces
-
+</div>
 
 ## Use Cases
 
@@ -55,7 +56,9 @@ export default App
 
 ### Preview
 
-![Chat Interface Preview](./assert/chatinterface.png)
+<div align="center">
+  <img src="./assert/chatinterface.png" alt="Chat Interface Preview" width="800">
+</div>
 
 
 ## Styling
