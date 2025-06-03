@@ -1,5 +1,7 @@
 # PuppyChat
 
+![PuppyChat Logo](./puppychatlogo.png)
+
 React SDK for building AI chatbot interfaces
 
 
@@ -51,6 +53,9 @@ function App() {
 export default App
 ```
 
+### Preview
+
+![Chat Interface Preview](./chatinterface.png)
 
 
 ## Styling
