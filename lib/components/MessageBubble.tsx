@@ -1,19 +1,7 @@
 import { Bot, User } from 'lucide-react'
 import { clsx } from 'clsx'
 import { CSSProperties, useState } from 'react'
-
-interface Message {
-  id: string
-  content: string
-  sender: 'user' | 'bot'
-  timestamp: Date
-}
-
-interface MessageBubbleProps {
-  message: Message
-  isTyping?: boolean
-  showAvatar?: boolean
-}
+import type { Message, MessageBubbleProps } from '../types'
 
 export default function MessageBubble({ message, isTyping = false, showAvatar = true }: MessageBubbleProps) {
   const isBot = message.sender === 'bot'

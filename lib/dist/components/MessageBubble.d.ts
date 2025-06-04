@@ -1,13 +1,3 @@
-interface Message {
-    id: string;
-    content: string;
-    sender: 'user' | 'bot';
-    timestamp: Date;
-}
-interface MessageBubbleProps {
-    message: Message;
-    isTyping?: boolean;
-}
-export default function MessageBubble({ message, isTyping }: MessageBubbleProps): import("react/jsx-runtime").JSX.Element;
-export {};
+import type { MessageBubbleProps } from '../types';
+export default function MessageBubble({ message, isTyping, showAvatar }: MessageBubbleProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=MessageBubble.d.ts.map

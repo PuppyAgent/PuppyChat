@@ -18,5 +18,9 @@ export interface ChatInterfaceProps {
     recommendedQuestions?: string[];
     showRecommendedQuestions?: boolean;
 }
-export default function ChatInterface({ onSendMessage, initialMessages, placeholder, title, className, disabled, width, height, welcomeMessage, showAvatar, recommendedQuestions, showRecommendedQuestions }?: ChatInterfaceProps): import("react/jsx-runtime").JSX.Element;
-//# sourceMappingURL=ChatInterface.d.ts.map
+export interface MessageBubbleProps {
+    message: Message;
+    isTyping?: boolean;
+    showAvatar?: boolean;
+}
+//# sourceMappingURL=index.d.ts.map

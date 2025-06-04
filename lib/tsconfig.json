@@ -12,7 +12,9 @@
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true,
       "target": "es2015",
-      "module": "esnext"
+      "module": "esnext",
+      "isolatedModules": true,
+      "preserveValueImports": false
     },
     "include": [
       "index.ts",
