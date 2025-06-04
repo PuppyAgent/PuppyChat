@@ -1,7 +1,7 @@
 {
     "extends": "../tsconfig.json",
     "compilerOptions": {
-      "outDir": "../dist",
+      "outDir": "dist",
       "declaration": true,
       "declarationMap": true,
       "sourceMap": true,
@@ -10,15 +10,17 @@
       "jsx": "react-jsx",
       "moduleResolution": "node",
       "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true
+      "allowSyntheticDefaultImports": true,
+      "target": "es2015",
+      "module": "esnext"
     },
     "include": [
       "index.ts",
-      "../components/**/*"
-, "components/ChatInterface.tsx", "components/MessageBubble.tsx"    ],
+      "components/**/*"
+    ],
     "exclude": [
       "../node_modules",
-      "../dist",
+      "dist",
       "example.tsx",
       "**/*.test.tsx",
       "**/*.test.ts",

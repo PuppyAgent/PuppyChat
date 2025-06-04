@@ -1,13 +1,13 @@
 {
-  "name": "puppychat-react-sdk",
-  "version": "1.0.0",
+  "name": "puppychat",
+  "version": "1.0.4",
   "type": "module",
   "description": "A beautiful React chat interface component with TypeScript support",
-  "main": "../dist/index.js",
-  "module": "../dist/index.esm.js",
-  "types": "../dist/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "../dist",
+    "dist/**/*",
     "README.md"
   ],
   "scripts": {

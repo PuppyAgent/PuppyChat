@@ -11,6 +11,9 @@ export interface ChatInterfaceProps {
     title?: string;
     className?: string;
     disabled?: boolean;
+    width?: string | number;
+    height?: string | number;
+    welcomeMessage?: string;
 }
-export default function ChatInterface({ onSendMessage, initialMessages, placeholder, title, className, disabled }?: ChatInterfaceProps): import("react/jsx-runtime").JSX.Element;
+export default function ChatInterface({ onSendMessage, initialMessages, placeholder, title, className, disabled, width, height, welcomeMessage }?: ChatInterfaceProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=ChatInterface.d.ts.map
