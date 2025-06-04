@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { MessageCircle, X, Bot } from 'lucide-react'
+import { MessageCircle, ChevronDown, Bot } from 'lucide-react'
 
 export interface FloatingBubbleProps {
   onClick?: () => void
@@ -76,9 +76,7 @@ export default function FloatingBubble({
       width: `${size}px`,
       height: `${size}px`,
       borderRadius: '50%',
-      background: isOpen 
-        ? 'linear-gradient(135deg, #ff6b6b, #ee5a52)' 
-        : 'linear-gradient(135deg, #4a90e2, #357abd)',
+      background: 'linear-gradient(135deg, #4a90e2, #357abd)',
       boxShadow: isHovered 
         ? '0 8px 25px rgba(74, 144, 226, 0.4)' 
         : '0 4px 15px rgba(0, 0, 0, 0.2)',
@@ -118,7 +116,7 @@ export default function FloatingBubble({
       }}
     >
       {isOpen ? (
-        <X style={styles.icon} />
+        <ChevronDown style={styles.icon} />
       ) : (
         <MessageCircle style={styles.icon} />
       )}

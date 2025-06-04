@@ -23,6 +23,9 @@ export interface ChatInterfaceProps {
   width?: string | number
   height?: string | number
   welcomeMessage?: string
+  showAvatar?: boolean
+  recommendedQuestions?: string[]
+  showRecommendedQuestions?: boolean
 }
 
 export default function ChatInterface({
@@ -34,7 +37,14 @@ export default function ChatInterface({
   disabled = false,
   width = '80vw',
   height = '800px',
-  welcomeMessage = "Hello! I am PuppyChat AI assistant. How can I help you?"
+  welcomeMessage = "Hello! I am PuppyChat AI assistant. How can I help you?",
+  showAvatar = true,
+  recommendedQuestions = [
+    "What are your use cases?",
+    "How can I get started?",
+    "What are your pricing options?"
+  ],
+  showRecommendedQuestions = true
 }: ChatInterfaceProps = {}) {
   // Create default initial messages using welcomeMessage
   const defaultInitialMessages = [
@@ -123,6 +133,49 @@ export default function ChatInterface({
     ])
   }
 
+  const handleRecommendedQuestionClick = async (question: string) => {
+    if (disabled || isTyping) return
+
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      content: question,
+      sender: 'user',
+      timestamp: new Date()
+    }
+
+    setMessages(prev => [...prev, userMessage])
+    setIsTyping(true)
+
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1500))
+      
+      let response: string
+      if (onSendMessage) {
+        response = await onSendMessage(question)
+      } else {
+        response = `I received your question: "${question}". This is a simulated response.`
+      }
+
+      const botMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        content: response,
+        sender: 'bot',
+        timestamp: new Date()
+      }
+      setMessages(prev => [...prev, botMessage])
+    } catch (error) {
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        content: 'Sorry, something went wrong. Please try again.',
+        sender: 'bot',
+        timestamp: new Date()
+      }
+      setMessages(prev => [...prev, errorMessage])
+    } finally {
+      setIsTyping(false)
+    }
+  }
+
   // Inline styles object
   const styles = {
     container: {
@@ -202,6 +255,37 @@ export default function ChatInterface({
     }
   }
 
+  const recommendedQuestionsStyle = {
+    padding: '16px 24px',
+    borderBottom: '1px solid #2a2a2a',
+    backgroundColor: 'rgba(26, 26, 26, 0.3)'
+  }
+
+  const questionButtonStyle = {
+    display: 'inline-block',
+    margin: '4px 8px 4px 0',
+    padding: '8px 12px',
+    backgroundColor: 'rgba(74, 144, 226, 0.1)',
+    border: '1px solid rgba(74, 144, 226, 0.3)',
+    borderRadius: '16px',
+    color: '#4a90e2',
+    fontSize: '12px',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+    whiteSpace: 'nowrap' as const
+  }
+
+  const questionButtonHoverStyle = {
+    backgroundColor: 'rgba(74, 144, 226, 0.2)',
+    borderColor: '#4a90e2'
+  }
+
+  // Check if we should show recommended questions (only when there's just the welcome message)
+  const shouldShowRecommendedQuestions = showRecommendedQuestions && 
+    messages.length === 1 && 
+    messages[0].sender === 'bot' && 
+    !isTyping
+
   return (
     <div style={styles.container} className={className}>
       {/* Header */}
@@ -243,8 +327,93 @@ export default function ChatInterface({
       {/* Messages */}
       <div style={styles.messagesContainer}>
         {messages.map((message) => (
-          <MessageBubble key={message.id} message={message} />
+          <MessageBubble key={message.id} message={message} showAvatar={showAvatar} />
         ))}
+        
+        {/* Recommended Questions in Message Area */}
+        {shouldShowRecommendedQuestions && (
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '12px',
+            marginTop: '20px',
+            alignItems: 'flex-end'
+          }}>
+            {recommendedQuestions.map((question, index) => (
+              <div
+                key={index}
+                onClick={() => handleRecommendedQuestionClick(question)}
+                style={{
+                  padding: '12px 16px',
+                  background: 'linear-gradient(135deg, rgba(74, 144, 226, 0.1), rgba(74, 144, 226, 0.05))',
+                  border: '1px solid rgba(74, 144, 226, 0.3)',
+                  borderRadius: '20px',
+                  color: '#4a90e2',
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  maxWidth: '75%',
+                  backdropFilter: 'blur(10px)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  userSelect: 'none',
+                  boxShadow: '0 2px 8px rgba(74, 144, 226, 0.1)',
+                  fontWeight: '500'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(135deg, rgba(74, 144, 226, 0.2), rgba(74, 144, 226, 0.15))'
+                  e.currentTarget.style.borderColor = 'rgba(74, 144, 226, 0.5)'
+                  e.currentTarget.style.color = '#357abd'
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)'
+                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(74, 144, 226, 0.25)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(135deg, rgba(74, 144, 226, 0.1), rgba(74, 144, 226, 0.05))'
+                  e.currentTarget.style.borderColor = 'rgba(74, 144, 226, 0.3)'
+                  e.currentTarget.style.color = '#4a90e2'
+                  e.currentTarget.style.transform = 'translateY(0px) scale(1)'
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(74, 144, 226, 0.1)'
+                }}
+                onMouseDown={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0px) scale(0.98)'
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(74, 144, 226, 0.2)'
+                }}
+                onMouseUp={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)'
+                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(74, 144, 226, 0.25)'
+                }}
+              >
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  background: 'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%)',
+                  opacity: 0,
+                  transition: 'opacity 0.3s ease'
+                }} />
+                <span style={{ 
+                  position: 'relative', 
+                  zIndex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}>
+                  {question}
+                  <span style={{
+                    fontSize: '10px',
+                    opacity: 0.7,
+                    marginLeft: '4px'
+                  }}>
+                    ↗
+                  </span>
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+        
         {isTyping && (
           <MessageBubble 
             message={{
@@ -254,6 +423,7 @@ export default function ChatInterface({
               timestamp: new Date()
             }}
             isTyping={true}
+            showAvatar={showAvatar}
           />
         )}
         <div ref={messagesEndRef} />

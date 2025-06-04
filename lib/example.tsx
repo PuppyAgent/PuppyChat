@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ChatInterface, Message } from 'puppychat-react-sdk'
+import { ChatInterface, Message } from 'puppychat'
 
 // Basic usage example
 export const BasicExample = () => {

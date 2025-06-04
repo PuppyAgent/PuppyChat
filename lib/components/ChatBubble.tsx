@@ -183,6 +183,7 @@ export default function ChatBubble({
         <ChatInterface
           {...chatProps}
           className="chat-bubble-interface"
+          showAvatar={false}
         />
       </div>
     </>

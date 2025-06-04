@@ -22,25 +22,36 @@ export default function DevTestPage() {
       justifyContent: 'center',
       position: 'relative'
     }}>
-      {/* Chat Bubble - positioned in bottom-right corner */}
+      {/* Chat Interface */}
       <ChatInterface
         onSendMessage={handleSendMessage}
         title="PuppyChat"
-        placeholder="Try: hello, long, error, or any message..."
+        placeholder="Ask PuppyChat anything..."
         welcomeMessage="Welcome to PuppyChat! I'm your AI assistant ready to help you with anything. What would you like to know?"
         width="600px"
         height="600px"
+        showAvatar={true}
+        recommendedQuestions={[
+          "What can you help me with?",
+          "Tell me a fun fact",
+          "How do I improve my productivity?",
+        ]}
       />
 
       {/* Chat Bubble - positioned in bottom-right corner */}
       <ChatBubble
         chatProps={{
           onSendMessage: handleSendMessage,
-          title: "PuppyChat",
-          placeholder: "Try: hello, long, error, or any message...",
-          welcomeMessage: "Welcome to PuppyChat! I'm your AI assistant ready to help you with anything. What would you like to know?",
+          title: "PuppyBubble",
+          placeholder: "Ask PuppyBubble anything...",
+          welcomeMessage: "Welcome to PuppyBubble! I'm your AI assistant ready to help you with anything. What would you like to know?",
           width: '400px',
-          height: '500px'
+          height: '600px',
+          recommendedQuestions: [
+            "What can you help me with?",
+            "Tell me a joke",
+            "How can I be more productive?",
+          ]
         }}
         bubbleProps={{
           size: 64,

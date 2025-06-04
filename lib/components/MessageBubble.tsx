@@ -12,9 +12,10 @@ interface Message {
 interface MessageBubbleProps {
   message: Message
   isTyping?: boolean
+  showAvatar?: boolean
 }
 
-export default function MessageBubble({ message, isTyping = false }: MessageBubbleProps) {
+export default function MessageBubble({ message, isTyping = false, showAvatar = true }: MessageBubbleProps) {
   const isBot = message.sender === 'bot'
   const [isHovered, setIsHovered] = useState(false)
   
@@ -22,7 +23,7 @@ export default function MessageBubble({ message, isTyping = false }: MessageBubb
     container: {
       display: 'flex',
       alignItems: 'flex-start',
-      gap: '24px',
+      gap: showAvatar ? '24px' : '0px',
       width: '100%',
       flexDirection: isBot ? 'row' : 'row-reverse'
     },
@@ -30,10 +31,10 @@ export default function MessageBubble({ message, isTyping = false }: MessageBubb
       display: 'flex',
       flexDirection: 'column',
       alignItems: isBot ? 'flex-start' : 'flex-end',
-      maxWidth: '70%'
+      maxWidth: showAvatar ? '70%' : '85%'
     },
     avatar: {
-      display: 'flex',
+      display: showAvatar ? 'flex' : 'none',
       alignItems: 'center',
       justifyContent: 'center',
       flexShrink: 0,
@@ -56,6 +57,7 @@ export default function MessageBubble({ message, isTyping = false }: MessageBubb
       top: '15px',
       width: 0,
       height: 0,
+      display: showAvatar ? 'block' : 'none',
       ...(isBot ? {
         left: '-12px',
         borderTop: '7px solid transparent',
@@ -73,6 +75,7 @@ export default function MessageBubble({ message, isTyping = false }: MessageBubb
       top: '16px',
       width: 0,
       height: 0,
+      display: showAvatar ? 'block' : 'none',
       ...(isBot ? {
         left: '-10px',
         borderTop: '6px solid transparent',
