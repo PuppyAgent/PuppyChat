@@ -1,6 +1,6 @@
 {
   "name": "puppychat",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "type": "module",
   "description": "A beautiful React chat interface component with TypeScript support",
   "main": "dist/index.js",
@@ -23,7 +23,10 @@
     "typescript",
     "chat-interface",
     "messaging",
-    "puppychat"
+    "puppychat",
+    "chatbot",
+    "ai-chat",
+    "chat-bubble"
   ],
   "author": "PuppyChat Team",
   "license": "MIT",
