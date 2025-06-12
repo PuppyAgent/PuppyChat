@@ -1,6 +1,6 @@
 {
   "name": "puppychat",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "type": "module",
   "description": "A beautiful React chat interface component with TypeScript support",
   "main": "dist/index.js",

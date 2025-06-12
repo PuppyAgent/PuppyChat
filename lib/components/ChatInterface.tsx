@@ -28,6 +28,25 @@ export interface ChatInterfaceProps {
   showRecommendedQuestions?: boolean
 }
 
+// 添加一个全局标识符来避免重复添加样式
+const STYLE_ID = 'puppychat-animations'
+
+// 在文件顶部添加相同的 StyleManager
+const StyleManager = {
+  injected: new Set<string>(),
+  
+  inject(id: string, css: string) {
+    if (typeof document === 'undefined') return // SSR 兼容
+    if (this.injected.has(id)) return
+    
+    const style = document.createElement('style')
+    style.id = id
+    style.textContent = css
+    document.head.appendChild(style)
+    this.injected.add(id)
+  }
+}
+
 export default function ChatInterface({
   onSendMessage,
   initialMessages,
@@ -69,6 +88,20 @@ export default function ChatInterface({
   useEffect(() => {
     scrollToBottom()
   }, [messages])
+
+  // 注入 spin 动画
+  useEffect(() => {
+    StyleManager.inject('puppychat-spin-animation', `
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    `)
+  }, [])
 
   const handleSendMessage = async () => {
     if (!inputValue.trim() || disabled) return

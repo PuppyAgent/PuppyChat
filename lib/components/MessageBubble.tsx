@@ -1,11 +1,43 @@
 import { Bot, User } from 'lucide-react'
 import { clsx } from 'clsx'
-import { CSSProperties, useState } from 'react'
+import { CSSProperties, useState, useEffect } from 'react'
 import type { Message, MessageBubbleProps } from '../types'
+
+// 样式管理器
+const StyleManager = {
+  injected: new Set<string>(),
+  
+  inject(id: string, css: string) {
+    if (typeof document === 'undefined') return // SSR 兼容
+    if (this.injected.has(id)) return
+    
+    const style = document.createElement('style')
+    style.id = id
+    style.textContent = css
+    document.head.appendChild(style)
+    this.injected.add(id)
+  }
+}
 
 export default function MessageBubble({ message, isTyping = false, showAvatar = true }: MessageBubbleProps) {
   const isBot = message.sender === 'bot'
   const [isHovered, setIsHovered] = useState(false)
+  
+  // 注入必要的动画样式
+  useEffect(() => {
+    StyleManager.inject('puppychat-pulse-animation', `
+      @keyframes pulse {
+        0%, 80%, 100% {
+          transform: scale(0.8);
+          opacity: 0.5;
+        }
+        40% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+    `)
+  }, [])
   
   const styles: { [key: string]: CSSProperties } = {
     container: {
@@ -80,7 +112,8 @@ export default function MessageBubble({ message, isTyping = false, showAvatar = 
       fontSize: '14px',
       whiteSpace: 'pre-wrap',
       lineHeight: '1.5',
-      margin: 0
+      margin: 0,
+      textAlign: 'left'
     },
     timestamp: {
       fontSize: '11px',

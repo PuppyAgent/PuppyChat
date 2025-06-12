@@ -22,8 +22,8 @@ export interface ChatBubbleDeployedProps extends Omit<ChatBubbleProps, 'chatProp
   
   // Fallback configuration
   simulateDelay?: boolean
-  customResponses?: Record<string, string>
   enableFallback?: boolean
+  errorMessage?: string
 }
 
 export default function ChatBubbleDeployed({
@@ -34,8 +34,8 @@ export default function ChatBubbleDeployed({
   inputBlockId = 'input_block',
   historyBlockId = 'history_block',
   simulateDelay = true,
-  customResponses = {},
   enableFallback = true,
+  errorMessage = "Sorry, I'm unable to process your request at the moment. Please try again later.",
   ...otherProps
 }: ChatBubbleDeployedProps) {
   
@@ -102,71 +102,22 @@ export default function ChatBubbleDeployed({
       
       // Fallback logic if enabled
       if (enableFallback) {
-        return await handleFallbackResponse(message)
+        return await handleFallbackResponse()
       } else {
-        return 'Sorry, I encountered an error. Please try again later.'
+        return errorMessage
       }
     }
   }
 
   // Fallback response handler
-  const handleFallbackResponse = async (message: string): Promise<string> => {
-    // Check for custom responses first
-    const lowerMessage = message.toLowerCase().trim()
-    for (const [key, response] of Object.entries(customResponses)) {
-      if (lowerMessage.includes(key.toLowerCase())) {
-        if (simulateDelay) {
-          await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000))
-        }
-        return response
-      }
-    }
-
+  const handleFallbackResponse = async (): Promise<string> => {
     // Simulate delay if enabled
     if (simulateDelay) {
       await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000))
     }
 
-    // Default responses
-    const responses = {
-      greeting: [
-        "Hello! How can I help you today?",
-        "Hi there! What can I do for you?",
-        "Hey! I'm here to assist you.",
-      ],
-      help: [
-        "I'm here to help! You can ask me questions about various topics.",
-        "I can assist you with information, answer questions, or just have a conversation.",
-        "Feel free to ask me anything you'd like to know!",
-      ],
-      thanks: [
-        "You're welcome! Is there anything else I can help you with?",
-        "Happy to help! Let me know if you need anything else.",
-        "Glad I could assist! Feel free to ask more questions.",
-      ],
-      default: [
-        "That's an interesting question! Let me think about that.",
-        "I understand what you're asking. Here's what I think...",
-        "Thanks for your message! I'm processing that information.",
-        "I appreciate you sharing that with me.",
-      ]
-    }
-
-    // Simple keyword matching for responses
-    if (/hello|hi|hey|greetings/i.test(message)) {
-      return responses.greeting[Math.floor(Math.random() * responses.greeting.length)]
-    }
-    
-    if (/help|assist|support/i.test(message)) {
-      return responses.help[Math.floor(Math.random() * responses.help.length)]
-    }
-    
-    if (/thank|thanks|appreciate/i.test(message)) {
-      return responses.thanks[Math.floor(Math.random() * responses.thanks.length)]
-    }
-
-    // Default response
-    return responses.default[Math.floor(Math.random() * responses.default.length)]
+    // Return the custom error message
+    return errorMessage
   }
 
   return (

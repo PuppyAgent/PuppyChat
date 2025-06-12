@@ -1,1 +1,1 @@
-{"version":3,"file":"MessageBubble.d.ts","sourceRoot":"","sources":["../../components/MessageBubble.tsx"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAW,kBAAkB,EAAE,MAAM,UAAU,CAAA;AAE3D,MAAM,CAAC,OAAO,UAAU,aAAa,CAAC,EAAE,OAAO,EAAE,QAAgB,EAAE,UAAiB,EAAE,EAAE,kBAAkB,2CAmJzG"}
+{"version":3,"file":"MessageBubble.d.ts","sourceRoot":"","sources":["../../components/MessageBubble.tsx"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAW,kBAAkB,EAAE,MAAM,UAAU,CAAA;AAkB3D,MAAM,CAAC,OAAO,UAAU,aAAa,CAAC,EAAE,OAAO,EAAE,QAAgB,EAAE,UAAiB,EAAE,EAAE,kBAAkB,2CAoKzG"}

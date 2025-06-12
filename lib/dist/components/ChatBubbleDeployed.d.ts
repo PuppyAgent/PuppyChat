@@ -7,8 +7,8 @@ export interface ChatBubbleDeployedProps extends Omit<ChatBubbleProps, 'chatProp
     inputBlockId?: string;
     historyBlockId?: string;
     simulateDelay?: boolean;
-    customResponses?: Record<string, string>;
     enableFallback?: boolean;
+    errorMessage?: string;
 }
-export default function ChatBubbleDeployed({ chatProps, chatbotId, baseUrl, chatbotKey, inputBlockId, historyBlockId, simulateDelay, customResponses, enableFallback, ...otherProps }: ChatBubbleDeployedProps): import("react/jsx-runtime").JSX.Element;
+export default function ChatBubbleDeployed({ chatProps, chatbotId, baseUrl, chatbotKey, inputBlockId, historyBlockId, simulateDelay, enableFallback, errorMessage, ...otherProps }: ChatBubbleDeployedProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=ChatBubbleDeployed.d.ts.map

@@ -54,11 +54,7 @@ export default function DevTestPage() {
         overlayOpacity={0.3}
         animationDuration={300}
         enableFallback={true}
-        customResponses={{
-          "capabilities": "I can help you with various tasks including answering questions, providing information, and having conversations!",
-          "features": "I have built-in message handling, customizable responses, and can integrate with APIs!",
-          "joke": "Why don't scientists trust atoms? Because they make up everything! 😄"
-        }}
+        errorMessage="Oops! PuppyDeployed is having trouble connecting right now. Please try again in a moment."
       />
 
       {/* Chat Interface */}
