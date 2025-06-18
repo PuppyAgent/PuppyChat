@@ -17,6 +17,9 @@ export interface ChatInterfaceProps {
     showAvatar?: boolean;
     recommendedQuestions?: string[];
     showRecommendedQuestions?: boolean;
+    showHeader?: boolean;
+    borderWidth?: number;
+    backgroundColor?: string;
 }
-export default function ChatInterface({ onSendMessage, initialMessages, placeholder, title, className, disabled, width, height, welcomeMessage, showAvatar, recommendedQuestions, showRecommendedQuestions }?: ChatInterfaceProps): import("react/jsx-runtime").JSX.Element;
+export default function ChatInterface({ onSendMessage, initialMessages, placeholder, title, className, disabled, width, height, welcomeMessage, showAvatar, recommendedQuestions, showRecommendedQuestions, showHeader, borderWidth, backgroundColor }?: ChatInterfaceProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=ChatInterface.d.ts.map

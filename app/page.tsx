@@ -65,12 +65,15 @@ export default function DevTestPage() {
         welcomeMessage="Welcome to PuppyChat! I'm your AI assistant ready to help you with anything. What would you like to know?"
         width="600px"
         height="600px"
-        showAvatar={true}
         recommendedQuestions={[
           "What can you help me with?",
           "Tell me a fun fact",
           "How do I improve my productivity?",
         ]}
+        showHeader={false}
+        backgroundColor="transparent"
+        borderWidth={3}
+        showAvatar={false}
       />
 
       {/* Original Chat Bubble - positioned in bottom-right corner */}

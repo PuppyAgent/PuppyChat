@@ -19,7 +19,12 @@ const StyleManager = {
   }
 }
 
-export default function MessageBubble({ message, isTyping = false, showAvatar = true }: MessageBubbleProps) {
+export default function MessageBubble({ 
+  message, 
+  isTyping = false, 
+  showAvatar = true,
+  showBorder = true 
+}: MessageBubbleProps) {
   const isBot = message.sender === 'bot'
   const [isHovered, setIsHovered] = useState(false)
   
@@ -69,7 +74,7 @@ export default function MessageBubble({ message, isTyping = false, showAvatar = 
         ? 'linear-gradient(to right, #2a2a2a, #333333)' 
         : 'linear-gradient(to right, #4a90e2, #5ba0f2)',
       color: isBot ? '#e5e5e5' : 'white',
-      border: isBot ? '1px solid #444' : 'none',
+      border: showBorder ? (isBot ? '1px solid #444' : 'none') : 'none',
       cursor: 'default'
     },
     bubbleTail: {

@@ -26,6 +26,9 @@ export interface ChatInterfaceProps {
   showAvatar?: boolean
   recommendedQuestions?: string[]
   showRecommendedQuestions?: boolean
+  showHeader?: boolean
+  borderWidth?: number
+  backgroundColor?: string
 }
 
 // 添加一个全局标识符来避免重复添加样式
@@ -63,7 +66,10 @@ export default function ChatInterface({
     "How can I get started?",
     "What are your pricing options?"
   ],
-  showRecommendedQuestions = true
+  showRecommendedQuestions = true,
+  showHeader = true,
+  borderWidth = 16,
+  backgroundColor = 'linear-gradient(to bottom, #1E1E1E, #252525)'
 }: ChatInterfaceProps = {}) {
   // Create default initial messages using welcomeMessage
   const defaultInitialMessages = [
@@ -214,19 +220,19 @@ export default function ChatInterface({
     container: {
       display: 'flex',
       flexDirection: 'column' as const,
-      borderRadius: '48px',
-      border: '16px solid #2a2a2a',
-      background: 'linear-gradient(to bottom, #1E1E1E, #252525)',
-      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+      borderRadius: '40px',
+      border: `${borderWidth}px solid #2a2a2a`,
+      background: backgroundColor,
+      boxShadow: 'none',
       width: width,
       height: height
     },
     header: {
+      display: showHeader ? 'flex' : 'none',
       color: 'white',
       padding: '20px',
       borderTopLeftRadius: '32px',
       borderTopRightRadius: '32px',
-      display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
       borderBottom: '1px solid #2a2a2a',
@@ -240,7 +246,9 @@ export default function ChatInterface({
       backgroundColor: 'rgba(26, 26, 26, 0.5)',
       display: 'flex',
       flexDirection: 'column' as const,
-      gap: '16px'
+      gap: '16px',
+      borderTopLeftRadius: showHeader ? '0px' : '32px',
+      borderTopRightRadius: showHeader ? '0px' : '32px'
     },
     inputContainer: {
       padding: '20px',
@@ -322,45 +330,51 @@ export default function ChatInterface({
   return (
     <div style={styles.container} className={className}>
       {/* Header */}
-      <div style={styles.header}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{
-            width: '36px',
-            height: '36px',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#2a2a2a',
-            boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)'
-          }}>
-            <Bot style={{ width: '20px', height: '20px', color: '#8b8b8b' }} />
+      {showHeader && (
+        <div style={styles.header}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{
+              width: '36px',
+              height: '36px',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#2a2a2a',
+              boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)'
+            }}>
+              <Bot style={{ width: '20px', height: '20px', color: '#8b8b8b' }} />
+            </div>
+            <div>
+              <h1 style={{ fontSize: '14px', fontWeight: 'normal', color: '#8b8b8b', margin: 0 }}>{title}</h1>
+            </div>
           </div>
-          <div>
-            <h1 style={{ fontSize: '14px', fontWeight: 'normal', color: '#8b8b8b', margin: 0 }}>{title}</h1>
-          </div>
+          <button
+            onClick={clearChat}
+            style={{
+              padding: '8px',
+              borderRadius: '8px',
+              backgroundColor: 'transparent',
+              color: '#8b8b8b',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
+            }}
+            title="Clear chat history"
+          >
+            <Trash2 style={{ width: '16px', height: '16px' }} />
+          </button>
         </div>
-        <button
-          onClick={clearChat}
-          style={{
-            padding: '8px',
-            borderRadius: '8px',
-            backgroundColor: 'transparent',
-            color: '#8b8b8b',
-            border: 'none',
-            cursor: 'pointer',
-            transition: 'all 0.2s ease'
-          }}
-          title="Clear chat history"
-        >
-          <Trash2 style={{ width: '16px', height: '16px' }} />
-        </button>
-      </div>
+      )}
 
       {/* Messages */}
       <div style={styles.messagesContainer}>
         {messages.map((message) => (
-          <MessageBubble key={message.id} message={message} showAvatar={showAvatar} />
+          <MessageBubble 
+            key={message.id} 
+            message={message} 
+            showAvatar={showAvatar}
+          />
         ))}
         
         {/* Recommended Questions in Message Area */}

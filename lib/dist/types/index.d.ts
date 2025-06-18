@@ -17,10 +17,15 @@ export interface ChatInterfaceProps {
     showAvatar?: boolean;
     recommendedQuestions?: string[];
     showRecommendedQuestions?: boolean;
+    showHeader?: boolean;
+    borderWidth?: number;
+    backgroundColor?: string;
+    showMessageBorder?: boolean;
 }
 export interface MessageBubbleProps {
     message: Message;
     isTyping?: boolean;
     showAvatar?: boolean;
+    showBorder?: boolean;
 }
 //# sourceMappingURL=index.d.ts.map

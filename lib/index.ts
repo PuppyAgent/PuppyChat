@@ -1,5 +1,6 @@
 // Re-export components with modifications to make them more suitable as SDK
 export { default as ChatInterface } from './components/ChatInterface'
+export { default as ChatInterfaceDeployed } from './components/ChatInterfaceDeployed'
 export { default as MessageBubble } from './components/MessageBubble'
 export { default as ChatBubble } from './components/ChatBubble'
 export { default as ChatBubbleDeployed } from './components/ChatBubbleDeployed'
@@ -7,6 +8,7 @@ export { default as FloatingBubble } from './components/FloatingBubble'
 
 // Export types - 使用更兼容的导出方式
 export type { Message, ChatInterfaceProps } from './components/ChatInterface'
+export type { ChatInterfaceDeployedProps } from './components/ChatInterfaceDeployed'
 export type { ChatBubbleProps } from './components/ChatBubble'
 export type { ChatBubbleDeployedProps } from './components/ChatBubbleDeployed'
 export type { FloatingBubbleProps } from './components/FloatingBubble'
