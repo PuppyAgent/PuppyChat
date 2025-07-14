@@ -346,7 +346,7 @@ export default function ChatInterface({
               <Bot style={{ width: '20px', height: '20px', color: '#8b8b8b' }} />
             </div>
             <div>
-              <h1 style={{ fontSize: '14px', fontWeight: 'normal', color: '#8b8b8b', margin: 0 }}>{title}</h1>
+              <div style={{ fontSize: '14px', fontWeight: 'normal', color: '#8b8b8b', margin: 0 }}>{title}</div>
             </div>
           </div>
           <button
