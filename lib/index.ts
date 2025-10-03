@@ -1,20 +1,27 @@
 // Re-export components with modifications to make them more suitable as SDK
-export { default as ChatInterface } from './components/ChatInterface'
+export { default as ChatInterface } from './components/component/ChatInterface'
 export { default as ChatInterfaceDeployed } from './components/ChatInterfaceDeployed'
-export { default as MessageBubble } from './components/MessageBubble'
+export { default as BotMessage } from './components/component/BotMessage'
+export { default as UserMessage } from './components/component/UserMessage'
 export { default as ChatBubble } from './components/ChatBubble'
 export { default as ChatBubbleDeployed } from './components/ChatBubbleDeployed'
-export { default as FloatingBubble } from './components/FloatingBubble'
+export { default as FloatingBubble } from './components/component/FloatingBubble'
+export { default as ChatMain } from './components/ChatMain'
+export { default as ChatSidebar } from './components/ChatSidebar'
+export { default as ChatSidebarDeployed } from './components/ChatSidebarDeployed'
 
 // Export types - 使用更兼容的导出方式
-export type { Message, ChatInterfaceProps } from './components/ChatInterface'
+export type { Message, ChatInterfaceProps } from './components/component/ChatInterface'
 export type { ChatInterfaceDeployedProps } from './components/ChatInterfaceDeployed'
 export type { ChatBubbleProps } from './components/ChatBubble'
 export type { ChatBubbleDeployedProps } from './components/ChatBubbleDeployed'
-export type { FloatingBubbleProps } from './components/FloatingBubble'
+export type { FloatingBubbleProps } from './components/component/FloatingBubble'
+export type { ChatMainProps } from './components/ChatMain'
+export type { ChatSidebarProps } from './components/ChatSidebar'
+export type { ChatSidebarDeployedProps } from './components/ChatSidebarDeployed'
 
 // Import Message type for internal use
-import type { Message } from './components/ChatInterface'
+import type { Message } from './components/component/ChatInterface'
 
 // Export version information
 export const version = '1.0.6'

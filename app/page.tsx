@@ -1,10 +1,10 @@
 'use client'
 
 import React from 'react'
-// Import the new ChatBubble component
+// Showcase ChatMain, ChatBubble, ChatSidebar
+import ChatMain from '../lib/components/ChatMain'
+import ChatSidebar from '../lib/components/ChatSidebar'
 import ChatBubble from '../lib/components/ChatBubble'
-import ChatBubbleDeployed from '../lib/components/ChatBubbleDeployed'
-import ChatInterface from '../lib/components/ChatInterface'
 
 export default function DevTestPage() {
   const handleSendMessage = async (message: string) => {
@@ -24,59 +24,44 @@ export default function DevTestPage() {
       justifyContent: 'center',
       position: 'relative'
     }}>
-
-
-      {/* New ChatBubbleDeployed - positioned in bottom-left corner */}
-      <ChatBubbleDeployed
-        chatbotId={process.env.NEXT_PUBLIC_CHATBOT_ID || ''}
-        baseUrl={process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:8004'}
-        chatbotKey={process.env.NEXT_PUBLIC_CHATBOT_KEY || ''}
-        inputBlockId={process.env.NEXT_PUBLIC_INPUT_BLOCK_ID || 'input_block'}
-        historyBlockId={process.env.NEXT_PUBLIC_HISTORY_BLOCK_ID || 'history_block'}
-        chatProps={{
-          title: "PuppyDeployed",
-          placeholder: "Ask PuppyDeployed anything...",
-          welcomeMessage: "Welcome to PuppyDeployed! I'm your deployed AI assistant with built-in intelligence. How can I help you?",
-          width: '400px',
-          height: '600px',
-          recommendedQuestions: [
-            "Hello there!",
-            "Can you help me?",
-            "What are your capabilities?",
-          ]
-        }}
-        bubbleProps={{
-          size: 64,
-          pulseAnimation: true
-        }}
-        position="bottom-left"
-        enableOverlay={true}
-        overlayOpacity={0.3}
-        animationDuration={300}
-        enableFallback={true}
-        errorMessage="Oops! PuppyDeployed is having trouble connecting right now. Please try again in a moment."
+      {/* ChatSidebar - fixed on the right */}
+      <ChatSidebar
+        width={480}
+        position="right"
+        topOffset={0}
+        bottomOffset={0}
+        showHeader={true}
+        title="PuppySidebar"
+        placeholder="Ask on the sidebar..."
+        welcomeMessage="This is the sidebar chat. How can I help?"
+        recommendedQuestions={[
+          "What are the features?",
+          "Any quick tips?",
+          "Where to start?",
+        ]}
+        onSendMessage={handleSendMessage}
       />
 
-      {/* Chat Interface */}
-      <ChatInterface
+      {/* ChatMain - centered panel using ChatInterface */}
+      <ChatMain
         onSendMessage={handleSendMessage}
-        title="PuppyChat"
-        placeholder="Ask PuppyChat anything..."
-        welcomeMessage="Welcome to PuppyChat! I'm your AI assistant ready to help you with anything. What would you like to know?"
+        title="PuppyMain"
+        placeholder="Ask PuppyMain anything..."
+        welcomeMessage="Welcome to PuppyMain!"
         width="600px"
-        height="600px"
+        height="90%"
         recommendedQuestions={[
           "What can you help me with?",
           "Tell me a fun fact",
           "How do I improve my productivity?",
         ]}
-        showHeader={false}
-        backgroundColor="transparent"
+        showHeader={true}
+        backgroundColor="#0D0D0D"
         borderWidth={3}
         showAvatar={false}
       />
 
-      {/* Original Chat Bubble - positioned in bottom-right corner */}
+      {/* ChatBubble - floating trigger in bottom-left to avoid sidebar overlap */}
       <ChatBubble
         chatProps={{
           onSendMessage: handleSendMessage,
@@ -95,7 +80,7 @@ export default function DevTestPage() {
           size: 64,
           pulseAnimation: true
         }}
-        position="bottom-right"
+        position="bottom-left"
         enableOverlay={true}
         overlayOpacity={0.3}
         animationDuration={300}

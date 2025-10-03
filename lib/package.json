@@ -1,6 +1,6 @@
 {
   "name": "puppychat",
-  "version": "1.0.8",
+  "version": "0.0.9",
   "type": "module",
   "description": "A beautiful React chat interface component with TypeScript support",
   "main": "dist/index.js",
@@ -44,7 +44,8 @@
   },
   "dependencies": {
     "lucide-react": "^0.292.0",
-    "clsx": "^2.0.0"
+    "clsx": "^2.0.0",
+    "react-markdown": "^9.0.1"
   },
   "engines": {
     "node": ">=14.0.0"

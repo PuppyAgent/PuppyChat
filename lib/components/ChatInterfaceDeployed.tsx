@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import ChatInterface, { ChatInterfaceProps } from './ChatInterface'
+import ChatInterface, { ChatInterfaceProps } from './component/ChatInterface'
 
 // Chat history message format
 interface ChatMessage {
@@ -120,6 +120,7 @@ export default function ChatInterfaceDeployed({
     <ChatInterface
       {...chatInterfaceProps}
       onSendMessage={handleSendMessage}
+      variant={chatInterfaceProps.variant ?? 'main'}
     />
   )
 } 

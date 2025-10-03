@@ -1,12 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import ChatInterface, { ChatInterfaceProps } from './ChatInterface'
-import FloatingBubble, { FloatingBubbleProps } from './FloatingBubble'
+import ChatInterface, { ChatInterfaceProps } from './component/ChatInterface'
+import FloatingBubble, { FloatingBubbleProps } from './component/FloatingBubble'
 
 export interface ChatBubbleProps {
   // ChatInterface props
-  chatProps?: Omit<ChatInterfaceProps, 'className'>
+  chatProps?: Omit<ChatInterfaceProps, 'className' | 'variant'>
   
   // FloatingBubble props
   bubbleProps?: Omit<FloatingBubbleProps, 'onClick' | 'isOpen'>
@@ -59,7 +59,7 @@ export default function ChatBubble({
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 
                     0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        border-radius: 32px !important;
+        border-radius: 16px !important;
       }
       
       @media (max-width: 768px) {
@@ -176,14 +176,16 @@ export default function ChatBubble({
         onClick={toggleChat}
         isOpen={isOpen}
         position={position}
+        pulseAnimation={false}
       />
 
       {/* Chat Interface */}
-      <div style={styles.chatContainer}>
+      <div style={styles.chatContainer} aria-hidden="true" data-nosnippet>
         <ChatInterface
           {...chatProps}
           className="chat-bubble-interface"
           showAvatar={false}
+          variant="bubble"
         />
       </div>
     </>

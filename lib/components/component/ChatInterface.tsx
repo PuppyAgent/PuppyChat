@@ -1,8 +1,9 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Send, Bot, User, Trash2 } from 'lucide-react'
-import MessageBubble from './MessageBubble'
+import { Bot, Trash2 } from 'lucide-react'
+import BotMessage from './BotMessage'
+import UserMessage from './UserMessage'
 
 // Export Message interface
 export interface Message {
@@ -29,6 +30,8 @@ export interface ChatInterfaceProps {
   showHeader?: boolean
   borderWidth?: number
   backgroundColor?: string
+  bg?: string
+  variant?: 'main' | 'bubble' | 'sidebar'
 }
 
 // 添加一个全局标识符来避免重复添加样式
@@ -69,8 +72,11 @@ export default function ChatInterface({
   showRecommendedQuestions = true,
   showHeader = true,
   borderWidth = 16,
-  backgroundColor = 'linear-gradient(to bottom, #1E1E1E, #252525)'
+  backgroundColor = '#0D0D0D',
+  bg,
+  variant = 'main'
 }: ChatInterfaceProps = {}) {
+  const resolvedBg = bg ?? backgroundColor
   // Create default initial messages using welcomeMessage
   const defaultInitialMessages = [
     {
@@ -86,6 +92,7 @@ export default function ChatInterface({
   const [isTyping, setIsTyping] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -107,6 +114,64 @@ export default function ChatInterface({
         }
       }
     `)
+  }, [])
+
+  // 注入 textarea placeholder 样式，确保使用与正文一致的字体
+  useEffect(() => {
+    StyleManager.inject('puppychat-textarea-placeholder', `
+      .puppychat-textarea::placeholder {
+        font-family: inherit;
+      }
+    `)
+  }, [])
+
+  // 注入滚动条样式：透明轨道 + 深色滚动块
+  useEffect(() => {
+    StyleManager.inject('puppychat-scrollbar-styles', `
+      .puppychat-messages, .puppychat-textarea {
+        scrollbar-color: rgba(100, 100, 100, 0.7) transparent;
+        scrollbar-width: thin;
+      }
+
+      .puppychat-messages::-webkit-scrollbar,
+      .puppychat-textarea::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      .puppychat-messages::-webkit-scrollbar-track,
+      .puppychat-textarea::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .puppychat-messages::-webkit-scrollbar-thumb,
+      .puppychat-textarea::-webkit-scrollbar-thumb {
+        background-color: rgba(100, 100, 100, 0.7);
+        border-radius: 8px;
+      }
+
+      .puppychat-messages::-webkit-scrollbar-thumb:hover,
+      .puppychat-textarea::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(120, 120, 120, 0.9);
+      }
+    `)
+  }, [])
+
+  // 根据内容自动调整 textarea 高度（hug 内容）
+  const autoResizeTextarea = () => {
+    const el = textareaRef.current
+    if (!el) return
+    el.style.height = 'auto'
+    el.style.height = `${el.scrollHeight}px`
+  }
+
+  useEffect(() => {
+    autoResizeTextarea()
+  }, [inputValue])
+
+  // 初始挂载时也进行一次自适应，避免首屏高度过小
+  useEffect(() => {
+    autoResizeTextarea()
   }, [])
 
   const handleSendMessage = async () => {
@@ -216,13 +281,16 @@ export default function ChatInterface({
   }
 
   // Inline styles object
+  const effectiveBorderWidth = variant === 'main' ? 0 : 1
+  const isTransparentBg = typeof resolvedBg === 'string' && resolvedBg.toLowerCase() === 'transparent'
+
   const styles = {
     container: {
       display: 'flex',
       flexDirection: 'column' as const,
-      borderRadius: '40px',
-      border: `${borderWidth}px solid #2a2a2a`,
-      background: backgroundColor,
+      borderRadius: '16px',
+      border: `${effectiveBorderWidth}px solid #2a2a2a`,
+      background: resolvedBg,
       boxShadow: 'none',
       width: width,
       height: height
@@ -230,40 +298,41 @@ export default function ChatInterface({
     header: {
       display: showHeader ? 'flex' : 'none',
       color: 'white',
-      padding: '20px',
-      borderTopLeftRadius: '32px',
-      borderTopRightRadius: '32px',
+      padding: '12px 16px',
+      borderTopLeftRadius: '16px',
+      borderTopRightRadius: '16px',
       alignItems: 'center',
       justifyContent: 'space-between',
-      borderBottom: '1px solid #2a2a2a',
-      backgroundColor: 'rgba(26, 26, 26, 0.8)',
-      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+      borderBottom: 'none',
+      backgroundColor: typeof resolvedBg === 'string' ? undefined : undefined,
+      background: resolvedBg,
+      boxShadow: 'none'
     },
     messagesContainer: {
       flex: 1,
       overflowY: 'auto' as const,
       padding: '24px',
-      backgroundColor: 'rgba(26, 26, 26, 0.5)',
+      backgroundColor: 'transparent',
       display: 'flex',
       flexDirection: 'column' as const,
       gap: '16px',
-      borderTopLeftRadius: showHeader ? '0px' : '32px',
-      borderTopRightRadius: showHeader ? '0px' : '32px'
+      borderTopLeftRadius: showHeader ? '0px' : '16px',
+      borderTopRightRadius: showHeader ? '0px' : '16px'
     },
     inputContainer: {
       padding: '20px',
-      borderBottomLeftRadius: '32px',
-      borderBottomRightRadius: '32px',
-      backgroundColor: 'rgba(26, 26, 26, 0.5)'
+      borderBottomLeftRadius: '16px',
+      borderBottomRightRadius: '16px',
+      backgroundColor: 'transparent'
     },
     inputWrapper: {
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'flex-end',
       gap: '12px',
       border: isFocused ? '2px solid #4a90e2' : '2px solid #3a3a3a',
       borderRadius: '16px',
       padding: '8px',
-      backgroundColor: '#2a2a2a',
+      backgroundColor: isTransparentBg ? 'transparent' : '#2a2a2a',
       boxShadow: isFocused 
         ? 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06), 0 0 0 2px rgba(74, 144, 226, 0.15)' 
         : 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
@@ -271,20 +340,24 @@ export default function ChatInterface({
     },
     textarea: {
       flex: 1,
-      height: '48px',
+      height: 'auto',
       padding: '8px',
       resize: 'none' as const,
       outline: 'none',
       fontSize: '14px',
       lineHeight: '1.5',
+      fontFamily: 'inherit',
       backgroundColor: 'transparent',
       color: '#e5e5e5',
       border: 'none',
-      minHeight: '48px'
+      minHeight: '28px',
+      boxSizing: 'border-box' as const,
+      maxHeight: '180px',
+      overflowY: 'auto' as const
     },
     sendButton: {
-      width: '40px',
-      height: '40px',
+      width: '37px',
+      height: '37px',
       borderRadius: '50%',
       border: 'none',
       display: 'flex',
@@ -328,14 +401,14 @@ export default function ChatInterface({
     !isTyping
 
   return (
-    <div style={styles.container} className={className}>
+    <div style={styles.container} className={className} aria-hidden="true" data-nosnippet data-variant={variant}>
       {/* Header */}
       {showHeader && (
         <div style={styles.header}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{
-              width: '36px',
-              height: '36px',
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', height: '26px' }}>
+          <div style={{
+            width: '26px',
+            height: '26px',
               borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
@@ -346,19 +419,24 @@ export default function ChatInterface({
               <Bot style={{ width: '20px', height: '20px', color: '#8b8b8b' }} />
             </div>
             <div>
-              <div style={{ fontSize: '14px', fontWeight: 'normal', color: '#8b8b8b', margin: 0 }}>{title}</div>
+            <div style={{ fontSize: '14px', fontWeight: 'normal', color: '#8b8b8b', margin: 0, height: '26px', lineHeight: '26px' }}>{title}</div>
             </div>
           </div>
           <button
             onClick={clearChat}
             style={{
-              padding: '8px',
+              width: '26px',
+              height: '26px',
+              padding: '0',
               borderRadius: '8px',
               backgroundColor: 'transparent',
               color: '#8b8b8b',
               border: 'none',
               cursor: 'pointer',
-              transition: 'all 0.2s ease'
+              transition: 'all 0.2s ease',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
             title="Clear chat history"
           >
@@ -368,13 +446,21 @@ export default function ChatInterface({
       )}
 
       {/* Messages */}
-      <div style={styles.messagesContainer}>
+      <div style={styles.messagesContainer} className="puppychat-messages">
         {messages.map((message) => (
-          <MessageBubble 
-            key={message.id} 
-            message={message} 
-            showAvatar={showAvatar}
-          />
+          message.sender === 'bot' ? (
+            <BotMessage
+              key={message.id}
+              message={message}
+              showAvatar={false}
+            />
+          ) : (
+            <UserMessage
+              key={message.id}
+              message={message}
+              showAvatar={false}
+            />
+          )
         ))}
         
         {/* Recommended Questions in Message Area */}
@@ -462,7 +548,7 @@ export default function ChatInterface({
         )}
         
         {isTyping && (
-          <MessageBubble 
+          <BotMessage 
             message={{
               id: 'typing',
               content: '',
@@ -470,7 +556,7 @@ export default function ChatInterface({
               timestamp: new Date()
             }}
             isTyping={true}
-            showAvatar={showAvatar}
+            showAvatar={false}
           />
         )}
         <div ref={messagesEndRef} />
@@ -480,13 +566,15 @@ export default function ChatInterface({
       <div style={styles.inputContainer}>
         <div style={styles.inputWrapper}>
           <textarea
+          ref={textareaRef}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             placeholder={placeholder}
-            style={styles.textarea}
+          style={styles.textarea}
+          className="puppychat-textarea"
             rows={1}
           />
           <button

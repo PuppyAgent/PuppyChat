@@ -32,9 +32,9 @@ export default function FloatingBubble({
   onClick,
   isOpen = false,
   className = "",
-  size = 60,
+  size = 50,
   position = 'bottom-right',
-  pulseAnimation = true
+  pulseAnimation = false
 }: FloatingBubbleProps) {
   const [isHovered, setIsHovered] = useState(false)
 
@@ -134,7 +134,7 @@ export default function FloatingBubble({
       {isOpen ? (
         <ChevronDown style={styles.icon} />
       ) : (
-        <ChatBubbleIcon size={size * 0.5} />
+        <ChatBubbleIcon size={size * 0.4} />
       )}
     </div>
   )

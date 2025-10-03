@@ -22,12 +22,8 @@ export interface ChatInterfaceProps {
   showHeader?: boolean
   borderWidth?: number
   backgroundColor?: string
-  showMessageBorder?: boolean
+  bg?: string
+  variant?: 'main' | 'bubble' | 'sidebar'
 }
 
-export interface MessageBubbleProps {
-  message: Message
-  isTyping?: boolean
-  showAvatar?: boolean
-  showBorder?: boolean
-} 
+// Deprecated: MessageBubbleProps removed after splitting into BotMessage and UserMessage

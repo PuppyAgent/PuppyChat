@@ -1,49 +1,65 @@
+<p align="center">
+  <img src="assert/puppychatlogo.png" alt="PuppyChat Logo" width="120" />
+</p>
+
+<h1 align="center">PuppyChat</h1>
+
+<p align="center">
+  <a href="https://www.puppyagent.com" target="_blank">
+    <img src="https://img.shields.io/badge/Web-puppyagent.com-39BC66?style=flat&logo=google-chrome&logoColor=white" alt="Homepage" height="22" />
+  </a>
+  &nbsp;
+  <a href="https://x.com/PuppyAgentTech" target="_blank">
+    <img src="https://img.shields.io/badge/X-@PuppyChatTech-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="22" />
+  </a>
+  &nbsp;
+  <a href="https://discord.gg/puppychat" target="_blank">
+    <img src="https://img.shields.io/badge/Discord-Join-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="22" />
+  </a>
+  &nbsp;
+  <a href="mailto:support@puppyagent.com">
+    <img src="https://img.shields.io/badge/Support-support@puppychat.com-F44336?style=flat&logo=gmail&logoColor=white" alt="Support" height="22" />
+  </a>
+</p>
+
+<p align="center">React SDK for building AI chatbot interfaces</p>
+
+PuppyChat is a React SDK designed for developers and product teams who need to quickly integrate AI chat capabilities into their applications. 
+
+It provides three distinct styles - **ChatBubble**, **ChatSidebar**, and **ChatMain** - each optimized for different use cases:
+
+- **Chat in Bubble** - Ideal for customer support widgets and non-intrusive help assistants
+- **Chat in Sidebar** - Perfect for documentation sites and persistent co-pilot experiences  
+- **Chat in Main** - Best for full-featured chatbot applications and internal knowledge base portals
+
+
 <div align="center">
-      <img src="./assert/puppychatlogo.png" alt="PuppyChat Logo" height="120">
-    <h1 align="center">PuppyChat</h1>
-
-**React SDK for building AI chatbot interfaces**
-
+  <img src="./assert/styles.png" alt="PuppyChat Styles Preview" width="900">
 </div>
-
-## Use Cases
-
-- 💼 **Customer Support**: Build intelligent customer service chatbots for websites
-- 🛒 **E-commerce Assistant**: Create shopping assistants to help users find products
-- 🏢 **HR Assistant**: Create employee onboarding and FAQ chatbots
-- 🎮 **Gaming NPCs**: Create interactive characters for games and virtual worlds
-- 📱 **Mobile App Integration**: Add conversational AI to mobile applications
-- 🌐 **Website Enhancement**: Improve user engagement with interactive chat features
 
 ## Installation
 
 ```bash
-npm install puppychat-react-sdk
+npm i puppychat
 ```
 
 or
 
 ```bash
-yarn add puppychat-react-sdk
+yarn add puppychat
 ```
 
-## Components
+## Usage
 
-PuppyChat provides two main components for different use cases:
+PuppyChat provides three main components for different use cases:
 
-### 1. ChatInterface - Full Chat Interface
+### 1. ChatMain - Full-Page Chat Interface
 
-A complete chat interface component for embedding directly in your application.
-
-<div align="center">
-  <img src="./assert/chatinterface.png" alt="Chat Interface Preview" width="800">
-</div>
-
-
+A complete full-page chat interface for building dedicated chat applications.
 
 ```tsx
 import React from 'react'
-import { ChatInterface } from 'puppychat-react-sdk'
+import { ChatMain } from 'puppychat'
 
 function App() {
   const handleSendMessage = async (message: string) => {
@@ -52,14 +68,23 @@ function App() {
   }
 
   return (
-    <div style={{ height: '100vh', padding: '20px' }}>
-      <ChatInterface
+    <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <ChatMain
         onSendMessage={handleSendMessage}
-        title="My Chat Bot"
-        welcomeMessage="Hello! How can I help you today?"
+        title="PuppyMain"
+        placeholder="Ask PuppyMain anything..."
+        welcomeMessage="Welcome to PuppyMain!"
         width="600px"
-        height="500px"
-        placeholder="Type your message..."
+        height="90%"
+        recommendedQuestions={[
+          "What can you help me with?",
+          "Tell me a fun fact",
+          "How do I improve my productivity?",
+        ]}
+        showHeader={true}
+        backgroundColor="#0D0D0D"
+        borderWidth={3}
+        showAvatar={false}
       />
     </div>
   )
@@ -68,31 +93,13 @@ function App() {
 export default App
 ```
 
-#### ChatInterface Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `onSendMessage` | `(message: string) => Promise<string> \| string` | - | Function to handle sending messages |
-| `initialMessages` | `Message[]` | - | Initial messages to display |
-| `placeholder` | `string` | `"Type your message..."` | Input placeholder text |
-| `title` | `string` | `"PuppyChat"` | Chat interface title |
-| `className` | `string` | `""` | Additional CSS class |
-| `disabled` | `boolean` | `false` | Disable the chat interface |
-| `width` | `string \| number` | `'80vw'` | Interface width |
-| `height` | `string \| number` | `'800px'` | Interface height |
-| `welcomeMessage` | `string` | `"Hello! I am PuppyChat AI assistant. How can I help you?"` | Initial welcome message |
-
 ### 2. ChatBubble - Floating Chat Widget
 
 A floating chat bubble that can be positioned anywhere on your page, perfect for customer support widgets.
 
-<div align="center">
-  <img src="./assert/chatbubble.png" alt="Chat Interface Preview" width="800">
-</div>
-
 ```tsx
 import React from 'react'
-import { ChatBubble } from 'puppychat-react-sdk'
+import { ChatBubble } from 'puppychat'
 
 function App() {
   const handleSendMessage = async (message: string) => {
@@ -109,16 +116,22 @@ function App() {
       <ChatBubble
         chatProps={{
           onSendMessage: handleSendMessage,
-          title: "Support Chat",
-          welcomeMessage: "Hi! How can we help you today?",
+          title: "PuppyBubble",
+          placeholder: "Ask PuppyBubble anything...",
+          welcomeMessage: "Welcome to PuppyBubble! I'm your AI assistant ready to help you with anything. What would you like to know?",
           width: '400px',
-          height: '500px'
+          height: '600px',
+          recommendedQuestions: [
+            "What can you help me with?",
+            "Tell me a joke",
+            "How can I be more productive?",
+          ]
         }}
         bubbleProps={{
-          size: 60,
+          size: 64,
           pulseAnimation: true
         }}
-        position="bottom-right"
+        position="bottom-left"
         enableOverlay={true}
         overlayOpacity={0.3}
         animationDuration={300}
@@ -130,66 +143,52 @@ function App() {
 export default App
 ```
 
-#### ChatBubble Props
+### 3. ChatSidebar - Sidebar Chat Panel
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `chatProps` | `Omit<ChatInterfaceProps, 'className'>` | `{}` | Props for the chat interface |
-| `bubbleProps` | `Omit<FloatingBubbleProps, 'onClick' \| 'isOpen'>` | `{}` | Props for the floating bubble |
-| `defaultOpen` | `boolean` | `false` | Whether chat starts open |
-| `animationDuration` | `number` | `300` | Animation duration in ms |
-| `overlayOpacity` | `number` | `0.3` | Background overlay opacity |
-| `enableOverlay` | `boolean` | `true` | Show background overlay when open |
-| `onStateChange` | `(isOpen: boolean) => void` | - | Callback when chat opens/closes |
-| `position` | `'bottom-right' \| 'bottom-left' \| 'top-right' \| 'top-left'` | `'bottom-right'` | Bubble position |
-| `chatOffset` | `{ x: number; y: number }` | `{ x: 0, y: 0 }` | Chat position offset |
+A fixed sidebar chat panel that stays anchored to the side of your page, ideal for documentation sites and persistent assistants.
 
-#### FloatingBubble Props (for bubbleProps)
+```tsx
+import React from 'react'
+import { ChatSidebar } from 'puppychat'
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `size` | `number` | `60` | Bubble size in pixels |
-| `pulseAnimation` | `boolean` | `true` | Enable pulse animation |
-| `className` | `string` | `""` | Additional CSS class |
+function App() {
+  const handleSendMessage = async (message: string) => {
+    // Your message handling logic here
+    return `Echo: ${message}`
+  }
 
-### Preview
+  return (
+    <div style={{ height: '100vh', position: 'relative' }}>
+      {/* Your page content */}
+      <main>
+        <h1>My Documentation Site</h1>
+        <p>Content goes here...</p>
+      </main>
+      
+      {/* Sidebar chat */}
+      <ChatSidebar
+        width={480}
+        position="right"
+        topOffset={0}
+        bottomOffset={0}
+        showHeader={true}
+        title="PuppySidebar"
+        placeholder="Ask on the sidebar..."
+        welcomeMessage="This is the sidebar chat. How can I help?"
+        recommendedQuestions={[
+          "What are the features?",
+          "Any quick tips?",
+          "Where to start?",
+        ]}
+        onSendMessage={handleSendMessage}
+      />
+    </div>
+  )
+}
 
-## Development
-
-### Running the Development Server
-
-```bash
-npm run dev
+export default App
 ```
-
-### Building the SDK
-
-```bash
-npm run build:sdk
-```
-
-### Testing
-
-The project includes a development test page at `/` where you can test the component with various scenarios:
-
-- Normal messages
-- Long messages (test with "long")
-- Error handling (test with "error")
-- Greeting responses (test with "hello")
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Changelog
-
-### v0.1.0
-- Initial release
-- Basic chat interface functionality
-- TypeScript support
-- Customizable welcome messages
-- Dark theme design
-- Responsive layout
-- Floating chat bubble widget
-- Multiple positioning options
-- Overlay and animation support 
