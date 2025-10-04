@@ -39,7 +39,13 @@ It provides three distinct styles - **ChatBubble**, **ChatSidebar**, and **ChatM
 
 ## What's New
 
-### 🎉 v0.0.11 - October 4, 2025
+### 🎉 v0.0.12 - October 4, 2025
+
+- **Improved Header Icon Display**: Removed circular container around custom icons for better flexibility
+- Custom logos now display in their original shape without forced circular cropping
+- Better `objectFit: 'contain'` handling for image icons
+
+### v0.0.11 - October 4, 2025
 
 - **Custom Header Icon**: You can now customize and replace the header logo with your own brand icon
 - Added `headerIcon` prop - accepts both URL strings and React components

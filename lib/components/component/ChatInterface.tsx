@@ -413,35 +413,27 @@ export default function ChatInterface({
         <div style={styles.header}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', height: `${headerIconSize}px` }}>
           {showHeaderIcon && (
-            <div style={{
-              width: `${headerIconSize}px`,
-              height: `${headerIconSize}px`,
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: headerIcon ? 'transparent' : '#2a2a2a',
-              boxShadow: headerIcon ? 'none' : 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
-              overflow: 'hidden'
-            }}>
+            <>
               {headerIcon ? (
                 typeof headerIcon === 'string' ? (
                   <img 
                     src={headerIcon} 
                     alt="Chat Icon" 
                     style={{ 
-                      width: '100%', 
-                      height: '100%', 
-                      objectFit: 'cover' 
+                      width: `${headerIconSize}px`,
+                      height: `${headerIconSize}px`,
+                      objectFit: 'contain'
                     }} 
                   />
                 ) : (
-                  headerIcon
+                  <div style={{ width: `${headerIconSize}px`, height: `${headerIconSize}px`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {headerIcon}
+                  </div>
                 )
               ) : (
-                <Bot style={{ width: `${headerIconSize * 0.77}px`, height: `${headerIconSize * 0.77}px`, color: '#8b8b8b' }} />
+                <Bot style={{ width: `${headerIconSize}px`, height: `${headerIconSize}px`, color: '#8b8b8b' }} />
               )}
-            </div>
+            </>
           )}
             <div>
             <div style={{ fontSize: '14px', fontWeight: 'normal', color: '#8b8b8b', margin: 0, height: `${headerIconSize}px`, lineHeight: `${headerIconSize}px` }}>{title}</div>
