@@ -13,11 +13,11 @@
     <img src="https://img.shields.io/badge/X-@PuppyChatTech-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="22" />
   </a>
   &nbsp;
-  <a href="https://discord.gg/puppychat" target="_blank">
+  <a href="https://discord.gg/eRjwqZpjBT" target="_blank">
     <img src="https://img.shields.io/badge/Discord-Join-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="22" />
   </a>
   &nbsp;
-  <a href="mailto:support@puppyagent.com">
+  <a href="mailto:guantum@puppyagent.com">
     <img src="https://img.shields.io/badge/Support-support@puppychat.com-F44336?style=flat&logo=gmail&logoColor=white" alt="Support" height="22" />
   </a>
 </p>

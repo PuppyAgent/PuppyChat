@@ -1,0 +1,468 @@
+# PuppyChat - Implementing AI Chatbot Responses
+
+## Overview
+PuppyChat provides two approaches for implementing AI chatbot responses:
+1. **Custom Implementation** - Full control over message handling
+2. **Deployed Components** - Pre-built API integration
+
+---
+
+## Approach 1: Custom Implementation (Recommended for Flexibility)
+
+For developers who want full control over their AI integration, use the base components:
+- `ChatMain` - Full-page chat interface
+- `ChatBubble` - Floating chat widget  
+- `ChatSidebar` - Fixed sidebar chat panel
+
+### Core Concept: The onSendMessage Function
+
+All base components require an `onSendMessage` callback function that:
+- **Input**: Receives the user's message as a string
+- **Output**: Returns a Promise<string> with the bot's response
+- **Async**: Must be asynchronous to handle API calls
+
+### Basic Implementation Pattern
+
+```tsx
+const handleSendMessage = async (message: string): Promise<string> => {
+  // 1. Process the user's message
+  // 2. Call your AI service (OpenAI, Anthropic, PuppyAgent, etc.)
+  // 3. Return the bot's response
+  
+  return botResponse
+}
+```
+
+### Example 1: Simple Echo Bot (Testing)
+
+```tsx
+import { ChatMain } from 'puppychat'
+
+function App() {
+  const handleSendMessage = async (message: string) => {
+    // Simulate processing delay
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    return `Echo: ${message}`
+  }
+
+  return (
+    <ChatMain
+      onSendMessage={handleSendMessage}
+      title="My Chatbot"
+      welcomeMessage="Hello! How can I help you?"
+    />
+  )
+}
+```
+
+### Example 2: OpenAI Integration
+
+```tsx
+import { ChatMain } from 'puppychat'
+import OpenAI from 'openai'
+
+function App() {
+  const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+    dangerouslyAllowBrowser: true // Only for development
+  })
+
+  const handleSendMessage = async (message: string) => {
+    try {
+      const completion = await openai.chat.completions.create({
+        model: "gpt-4",
+        messages: [
+          { role: "system", content: "You are a helpful assistant." },
+          { role: "user", content: message }
+        ],
+      })
+      
+      return completion.choices[0].message.content || "No response"
+    } catch (error) {
+      console.error('OpenAI API error:', error)
+      return "Sorry, I encountered an error. Please try again."
+    }
+  }
+
+  return (
+    <ChatMain
+      onSendMessage={handleSendMessage}
+      title="GPT-4 Assistant"
+      welcomeMessage="I'm powered by GPT-4. Ask me anything!"
+    />
+  )
+}
+```
+
+### Example 3: Anthropic Claude Integration
+
+```tsx
+import { ChatMain } from 'puppychat'
+import Anthropic from '@anthropic-ai/sdk'
+
+function App() {
+  const anthropic = new Anthropic({
+    apiKey: process.env.ANTHROPIC_API_KEY,
+  })
+
+  const handleSendMessage = async (message: string) => {
+    try {
+      const response = await anthropic.messages.create({
+        model: "claude-3-5-sonnet-20241022",
+        max_tokens: 1024,
+        messages: [
+          { role: "user", content: message }
+        ],
+      })
+      
+      const textContent = response.content.find(block => block.type === 'text')
+      return textContent?.text || "No response"
+    } catch (error) {
+      console.error('Anthropic API error:', error)
+      return "Sorry, I encountered an error. Please try again."
+    }
+  }
+
+  return (
+    <ChatMain
+      onSendMessage={handleSendMessage}
+      title="Claude Assistant"
+      welcomeMessage="I'm powered by Claude. How can I assist you?"
+    />
+  )
+}
+```
+
+### Example 4: Custom API Integration
+
+```tsx
+import { ChatBubble } from 'puppychat'
+
+function App() {
+  const handleSendMessage = async (message: string) => {
+    try {
+      const response = await fetch('https://your-api.com/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${YOUR_API_KEY}`
+        },
+        body: JSON.stringify({ message })
+      })
+
+      const data = await response.json()
+      return data.response || "No response received"
+    } catch (error) {
+      console.error('API error:', error)
+      return "Sorry, I'm having trouble connecting. Please try again."
+    }
+  }
+
+  return (
+    <ChatBubble
+      chatProps={{
+        onSendMessage: handleSendMessage,
+        title: "Support Assistant",
+        welcomeMessage: "How can we help you today?",
+      }}
+      position="bottom-right"
+    />
+  )
+}
+```
+
+### Example 5: With Chat History (Stateful Conversation)
+
+```tsx
+import { ChatMain } from 'puppychat'
+import { useState } from 'react'
+
+function App() {
+  const [chatHistory, setChatHistory] = useState<Array<{role: string, content: string}>>([])
+
+  const handleSendMessage = async (message: string) => {
+    try {
+      // Prepare conversation history
+      const messages = [
+        ...chatHistory,
+        { role: 'user', content: message }
+      ]
+
+      // Call your AI service with history
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+        },
+        body: JSON.stringify({
+          model: 'gpt-4',
+          messages: messages
+        })
+      })
+
+      const data = await response.json()
+      const botResponse = data.choices[0].message.content
+
+      // Update chat history
+      setChatHistory([
+        ...messages,
+        { role: 'assistant', content: botResponse }
+      ])
+
+      return botResponse
+    } catch (error) {
+      return "Error processing your request"
+    }
+  }
+
+  return <ChatMain onSendMessage={handleSendMessage} />
+}
+```
+
+---
+
+## Approach 2: Deployed Components (Quick Setup)
+
+For faster integration with PuppyAgent or compatible APIs, use the pre-built deployed components:
+- `ChatInterfaceDeployed` (alias for ChatMainDeployed)
+- `ChatBubbleDeployed`
+- `ChatSidebarDeployed`
+
+These components have **built-in API integration** - no need to implement `onSendMessage`.
+
+### API Requirements
+
+Your API endpoint should accept:
+```json
+{
+  "input": {
+    "input_block": "user message here"
+  },
+  "chat_history": {
+    "history_block": [
+      {"role": "user", "content": "previous message"},
+      {"role": "assistant", "content": "previous response"}
+    ]
+  }
+}
+```
+
+And return:
+```json
+{
+  "output": {
+    "output_block": "bot response here"
+  }
+}
+```
+
+### Example: ChatInterfaceDeployed
+
+```tsx
+import { ChatInterfaceDeployed } from 'puppychat'
+
+function App() {
+  return (
+    <ChatInterfaceDeployed
+      // API Configuration
+      chatbotId="your-chatbot-id"
+      baseUrl="https://api.puppyagent.com"
+      chatbotKey="your-api-key"
+      
+      // Optional: Custom block IDs
+      inputBlockId="input_block"
+      historyBlockId="history_block"
+      
+      // Optional: Error handling
+      enableFallback={true}
+      errorMessage="Sorry, I'm having trouble right now."
+      
+      // UI Configuration (same as ChatMain)
+      title="AI Assistant"
+      welcomeMessage="Hello! How can I help?"
+      width="600px"
+      height="90%"
+    />
+  )
+}
+```
+
+### Example: ChatBubbleDeployed
+
+```tsx
+import { ChatBubbleDeployed } from 'puppychat'
+
+function App() {
+  return (
+    <ChatBubbleDeployed
+      // API Configuration
+      chatbotId="support-bot-123"
+      baseUrl="https://api.puppyagent.com"
+      chatbotKey="pk_live_abc123xyz"
+      
+      // Chat properties
+      chatProps={{
+        title: "Support Chat",
+        welcomeMessage: "Need help? Ask me anything!",
+        width: '400px',
+        height: '600px',
+      }}
+      
+      // Bubble properties
+      bubbleProps={{
+        size: 64,
+        pulseAnimation: true
+      }}
+      
+      position="bottom-right"
+      enableOverlay={true}
+    />
+  )
+}
+```
+
+### Example: ChatSidebarDeployed
+
+```tsx
+import { ChatSidebarDeployed } from 'puppychat'
+
+function App() {
+  return (
+    <ChatSidebarDeployed
+      // API Configuration
+      chatbotId="docs-assistant-456"
+      baseUrl="https://api.puppyagent.com"
+      chatbotKey="pk_live_def456uvw"
+      
+      // Sidebar Configuration
+      width={480}
+      position="right"
+      title="Documentation Assistant"
+      welcomeMessage="Ask me about our documentation"
+      placeholder="Type your question..."
+      
+      recommendedQuestions={[
+        "How do I get started?",
+        "What are the key features?",
+        "Where can I find examples?"
+      ]}
+    />
+  )
+}
+```
+
+---
+
+## Comparison: Custom vs Deployed
+
+### Use Custom Implementation When:
+- ✅ You want to use OpenAI, Anthropic, or other AI providers
+- ✅ You need custom logic before/after API calls
+- ✅ You want to implement caching or rate limiting
+- ✅ You need to integrate with existing backend systems
+- ✅ You want maximum flexibility
+
+### Use Deployed Components When:
+- ✅ You have a PuppyAgent chatbot already configured
+- ✅ You want the fastest setup (no backend code needed)
+- ✅ Your API follows the expected input/output format
+- ✅ You want built-in chat history management
+- ✅ You need automatic error handling with fallbacks
+
+---
+
+## Best Practices
+
+### 1. Error Handling
+Always wrap your `onSendMessage` in try-catch:
+```tsx
+const handleSendMessage = async (message: string) => {
+  try {
+    // Your API call
+    return response
+  } catch (error) {
+    console.error('Error:', error)
+    return "Sorry, something went wrong. Please try again."
+  }
+}
+```
+
+### 2. Loading States
+The components automatically show loading indicators while waiting for your response.
+
+### 3. Environment Variables
+Never expose API keys in client-side code. Use:
+- Environment variables: `process.env.NEXT_PUBLIC_API_KEY`
+- Backend proxy: Route requests through your server
+- Edge functions: Use Vercel/Netlify functions
+
+### 4. Rate Limiting
+Implement rate limiting to prevent abuse:
+```tsx
+let lastRequest = 0
+const RATE_LIMIT_MS = 2000
+
+const handleSendMessage = async (message: string) => {
+  const now = Date.now()
+  if (now - lastRequest < RATE_LIMIT_MS) {
+    return "Please wait a moment before sending another message."
+  }
+  lastRequest = now
+  
+  // Your API call
+}
+```
+
+### 5. Message Validation
+Validate user input before sending:
+```tsx
+const handleSendMessage = async (message: string) => {
+  if (!message.trim()) {
+    return "Please enter a message."
+  }
+  
+  if (message.length > 1000) {
+    return "Message too long. Please keep it under 1000 characters."
+  }
+  
+  // Your API call
+}
+```
+
+---
+
+## Testing Your Integration
+
+### Test Checklist:
+- [ ] Messages send successfully
+- [ ] Bot responses display correctly
+- [ ] Error messages appear when API fails
+- [ ] Loading states show during API calls
+- [ ] Rate limiting works (if implemented)
+- [ ] Chat history persists (if implemented)
+- [ ] Recommended questions work
+- [ ] UI renders correctly on mobile and desktop
+
+### Simple Test Implementation:
+```tsx
+const handleSendMessage = async (message: string) => {
+  console.log('User sent:', message)
+  await new Promise(r => setTimeout(r, 1000))
+  const response = `Received: ${message}`
+  console.log('Bot responding:', response)
+  return response
+}
+```
+
+---
+
+## Need Help?
+
+- Homepage: https://www.puppyagent.com
+- Support: guantumt@puppyagent.com
+- Discord: https://discord.gg/eRjwqZpjBT
+- Twitter: @PuppyAgentTech
+
+For more examples, see the `/app/page.tsx` file in the PuppyChat repository.
+
