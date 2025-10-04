@@ -2,7 +2,7 @@
   <img src="assert/puppychatlogo.png" alt="PuppyChat Logo" width="120" />
 </p>
 
-<h1 align="center">PuppyChat</h1>
+<h1 align="center">PuppyChat SDK</h1>
 
 <p align="center">
   <a href="https://www.puppyagent.com" target="_blank">
@@ -22,7 +22,7 @@
   </a>
 </p>
 
-<p align="center">React SDK for building AI chatbot interfaces</p>
+<p align="center">AI chatbot interfaces SDK in React</p>
 
 PuppyChat is a React SDK designed for developers and product teams who need to quickly integrate AI chat capabilities into their applications. 
 
