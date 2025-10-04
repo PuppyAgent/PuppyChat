@@ -1,5 +1,5 @@
 export { default as ChatInterface } from './components/component/ChatInterface';
-export { default as ChatInterfaceDeployed } from './components/ChatInterfaceDeployed';
+export { default as ChatInterfaceDeployed } from './components/ChatMainDeployed';
 export { default as BotMessage } from './components/component/BotMessage';
 export { default as UserMessage } from './components/component/UserMessage';
 export { default as ChatBubble } from './components/ChatBubble';
@@ -9,7 +9,7 @@ export { default as ChatMain } from './components/ChatMain';
 export { default as ChatSidebar } from './components/ChatSidebar';
 export { default as ChatSidebarDeployed } from './components/ChatSidebarDeployed';
 export type { Message, ChatInterfaceProps } from './components/component/ChatInterface';
-export type { ChatInterfaceDeployedProps } from './components/ChatInterfaceDeployed';
+export type { ChatInterfaceDeployedProps } from './components/ChatMainDeployed';
 export type { ChatBubbleProps } from './components/ChatBubble';
 export type { ChatBubbleDeployedProps } from './components/ChatBubbleDeployed';
 export type { FloatingBubbleProps } from './components/component/FloatingBubble';

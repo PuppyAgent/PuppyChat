@@ -49,7 +49,21 @@ or
 yarn add puppychat
 ```
 
+
 ## Usage
+
+
+### AI Coding Assistant Guide
+
+For developers using AI coding assistants like **Cursor**, **Claude Code**, or **GitHub Codex**, we provide a comprehensive implementation guide in `llm.txt` that contains:
+
+- Complete integration examples for OpenAI, Anthropic Claude, and custom APIs
+- Best practices for error handling, rate limiting, and security
+- Detailed explanations of the `onSendMessage` callback pattern
+- Comparison between custom implementation and deployed components
+
+**How to use:**
+Simply provide the [`llm.txt`](llm.txt) file to your AI coding assistant by using the `@` mention feature (e.g., `@llm.txt`) when asking implementation questions. This will help the AI provide more accurate and contextual code suggestions specific to PuppyChat.
 
 PuppyChat provides three main components for different use cases:
 
