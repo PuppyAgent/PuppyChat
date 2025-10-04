@@ -17,7 +17,7 @@ export type { ChatMainProps } from './components/ChatMain';
 export type { ChatSidebarProps } from './components/ChatSidebar';
 export type { ChatSidebarDeployedProps } from './components/ChatSidebarDeployed';
 import type { Message } from './components/component/ChatInterface';
-export declare const version = "1.0.6";
+export declare const version = "1.0.11";
 export declare const defaultConfig: {
     placeholder: string;
     title: string;

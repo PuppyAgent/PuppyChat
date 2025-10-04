@@ -22,6 +22,9 @@ export interface ChatInterfaceProps {
     backgroundColor?: string;
     bg?: string;
     variant?: 'main' | 'bubble' | 'sidebar';
+    headerIcon?: string | React.ReactNode;
+    headerIconSize?: number;
+    showHeaderIcon?: boolean;
 }
-export default function ChatInterface({ onSendMessage, initialMessages, placeholder, title, className, disabled, width, height, welcomeMessage, showAvatar, recommendedQuestions, showRecommendedQuestions, showHeader, borderWidth, backgroundColor, bg, variant }?: ChatInterfaceProps): import("react/jsx-runtime").JSX.Element;
+export default function ChatInterface({ onSendMessage, initialMessages, placeholder, title, className, disabled, width, height, welcomeMessage, showAvatar, recommendedQuestions, showRecommendedQuestions, showHeader, borderWidth, backgroundColor, bg, variant, headerIcon, headerIconSize, showHeaderIcon }?: ChatInterfaceProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=ChatInterface.d.ts.map

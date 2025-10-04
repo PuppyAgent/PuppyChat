@@ -40,6 +40,9 @@ export default function DevTestPage() {
           "Where to start?",
         ]}
         onSendMessage={handleSendMessage}
+        headerIcon="https://api.dicebear.com/7.x/bottts/svg?seed=sidebar"
+        headerIconSize={32}
+        showHeaderIcon={true}
       />
 
       {/* ChatMain - centered panel using ChatInterface */}
@@ -59,6 +62,9 @@ export default function DevTestPage() {
         backgroundColor="#0D0D0D"
         borderWidth={3}
         showAvatar={false}
+        headerIcon="https://api.dicebear.com/7.x/bottts/svg?seed=main"
+        headerIconSize={36}
+        showHeaderIcon={true}
       />
 
       {/* ChatBubble - floating trigger in bottom-left to avoid sidebar overlap */}
@@ -74,7 +80,10 @@ export default function DevTestPage() {
             "What can you help me with?",
             "Tell me a joke",
             "How can I be more productive?",
-          ]
+          ],
+          headerIcon: "https://api.dicebear.com/7.x/bottts/svg?seed=bubble",
+          headerIconSize: 28,
+          showHeaderIcon: true
         }}
         bubbleProps={{
           size: 64,

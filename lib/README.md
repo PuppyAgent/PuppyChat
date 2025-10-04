@@ -37,6 +37,15 @@ It provides three distinct styles - **ChatBubble**, **ChatSidebar**, and **ChatM
   <img src="./assert/styles.png" alt="PuppyChat Styles Preview" width="900">
 </div>
 
+## What's New
+
+### 🎉 v0.0.11 - October 4, 2025
+
+- **Custom Header Icon**: You can now customize and replace the header logo with your own brand icon
+- Added `headerIcon` prop - accepts both URL strings and React components
+- Added `headerIconSize` prop - control the size of your custom icon
+- Added `showHeaderIcon` prop - toggle icon visibility
+
 ## Installation
 
 ```bash

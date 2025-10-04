@@ -37,6 +37,17 @@ It provides three distinct styles - **ChatBubble**, **ChatSidebar**, and **ChatM
   <img src="./assert/styles.png" alt="PuppyChat Styles Preview" width="900">
 </div>
 
+## What's New
+
+### 🎉 v0.0.11 - October 4, 2025
+
+- **Custom Header Icon**: You can now customize and replace the header logo with your own brand icon
+- Added `headerIcon` prop - accepts both URL strings and React components
+- Added `headerIconSize` prop - control the size of your custom icon
+- Added `showHeaderIcon` prop - toggle icon visibility
+
+See the [Configuration Reference](#configuration-reference) below for detailed usage examples.
+
 ## Installation
 
 ```bash
@@ -84,21 +95,40 @@ function App() {
   return (
     <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <ChatMain
+        // Core functionality
         onSendMessage={handleSendMessage}
+        
+        // UI Configuration
         title="PuppyMain"
         placeholder="Ask PuppyMain anything..."
-        welcomeMessage="Welcome to PuppyMain!"
+        welcomeMessage="Welcome to PuppyMain! I'm your AI assistant ready to help you with anything."
+        
+        // Layout
         width="600px"
         height="90%"
+        
+        // Styling
+        backgroundColor="#0D0D0D"
+        borderWidth={0}
+        
+        // Header customization
+        showHeader={true}
+        showHeaderIcon={true}
+        headerIcon="https://your-domain.com/logo.png" // or pass a React component
+        headerIconSize={32}
+        
+        // Features
+        showAvatar={false}
+        showRecommendedQuestions={true}
         recommendedQuestions={[
           "What can you help me with?",
           "Tell me a fun fact",
           "How do I improve my productivity?",
         ]}
-        showHeader={true}
-        backgroundColor="#0D0D0D"
-        borderWidth={3}
-        showAvatar={false}
+        
+        // Optional
+        disabled={false}
+        className="my-custom-chat"
       />
     </div>
   )
@@ -129,17 +159,40 @@ function App() {
       {/* Floating chat bubble */}
       <ChatBubble
         chatProps={{
+          // Core functionality
           onSendMessage: handleSendMessage,
+          
+          // UI Configuration
           title: "PuppyBubble",
           placeholder: "Ask PuppyBubble anything...",
           welcomeMessage: "Welcome to PuppyBubble! I'm your AI assistant ready to help you with anything. What would you like to know?",
+          
+          // Layout
           width: '400px',
           height: '600px',
+          
+          // Styling
+          backgroundColor: "#0D0D0D",
+          borderWidth: 1,
+          
+          // Header customization
+          showHeader: true,
+          showHeaderIcon: true,
+          headerIcon: "https://your-domain.com/logo.png",
+          headerIconSize: 28,
+          
+          // Features
+          showAvatar: false,
+          showRecommendedQuestions: true,
           recommendedQuestions: [
             "What can you help me with?",
             "Tell me a joke",
             "How can I be more productive?",
-          ]
+          ],
+          
+          // Optional
+          disabled: false,
+          className: "my-bubble-chat"
         }}
         bubbleProps={{
           size: 64,
@@ -181,20 +234,42 @@ function App() {
       
       {/* Sidebar chat */}
       <ChatSidebar
+        // Core functionality
+        onSendMessage={handleSendMessage}
+        
+        // UI Configuration
+        title="PuppySidebar"
+        placeholder="Ask on the sidebar..."
+        welcomeMessage="This is the sidebar chat. How can I help you today?"
+        
+        // Layout
         width={480}
         position="right"
         topOffset={0}
         bottomOffset={0}
+        
+        // Styling
+        backgroundColor="#0D0D0D"
+        borderWidth={1}
+        
+        // Header customization
         showHeader={true}
-        title="PuppySidebar"
-        placeholder="Ask on the sidebar..."
-        welcomeMessage="This is the sidebar chat. How can I help?"
+        showHeaderIcon={true}
+        headerIcon="https://your-domain.com/logo.png"
+        headerIconSize={30}
+        
+        // Features
+        showAvatar={false}
+        showRecommendedQuestions={true}
         recommendedQuestions={[
           "What are the features?",
           "Any quick tips?",
           "Where to start?",
         ]}
-        onSendMessage={handleSendMessage}
+        
+        // Optional
+        disabled={false}
+        className="my-sidebar-chat"
       />
     </div>
   )
@@ -202,6 +277,47 @@ function App() {
 
 export default App
 ```
+
+## Configuration Reference
+
+All three components (`ChatMain`, `ChatBubble`, `ChatSidebar`) share the same core configuration options:
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `onSendMessage` | `(message: string) => Promise<string> \| string` | - | **Required** callback function to handle user messages |
+| `title` | `string` | `"PuppyChat"` | Title displayed in the chat header |
+| `placeholder` | `string` | `"Type your message..."` | Input field placeholder text |
+| `welcomeMessage` | `string` | `"Hello! I am PuppyChat AI assistant..."` | Initial greeting message from the bot |
+| `width` | `string \| number` | `'80vw'` | Chat window width (CSS units or number) |
+| `height` | `string \| number` | `'800px'` | Chat window height (CSS units or number) |
+| `backgroundColor` | `string` | `'#0D0D0D'` | Background color of the chat interface |
+| `bg` | `string` | - | Alternative prop for backgroundColor |
+| `borderWidth` | `number` | `1` | Border width in pixels (0 for no border) |
+| `showHeader` | `boolean` | `true` | Show/hide the chat header |
+| `headerIcon` | `string \| React.ReactNode` | - | Custom header icon (URL string or React component) |
+| `headerIconSize` | `number` | `26` | Size of the header icon in pixels |
+| `showHeaderIcon` | `boolean` | `true` | Show/hide the header icon |
+| `showAvatar` | `boolean` | `true` | Show/hide user/bot avatars |
+| `showRecommendedQuestions` | `boolean` | `true` | Show/hide recommended questions |
+| `recommendedQuestions` | `string[]` | `[]` | Array of suggested questions for users |
+| `disabled` | `boolean` | `false` | Disable message input and sending |
+| `className` | `string` | `""` | Custom CSS class for styling |
+| `initialMessages` | `Message[]` | - | Pre-populate chat with initial messages |
+
+### Component-Specific Props
+
+**ChatBubble** has additional props:
+- `chatProps` - Object containing all the configuration options above
+- `bubbleProps` - Bubble appearance configuration (size, animation)
+- `position` - Bubble position: `"bottom-right"`, `"bottom-left"`, `"top-right"`, `"top-left"`
+- `enableOverlay` - Show overlay when chat is open
+- `overlayOpacity` - Overlay transparency (0-1)
+- `animationDuration` - Open/close animation duration in ms
+
+**ChatSidebar** has additional props:
+- `position` - Sidebar position: `"left"` or `"right"`
+- `topOffset` - Distance from top of viewport (in pixels)
+- `bottomOffset` - Distance from bottom of viewport (in pixels)
 
 ## License
 

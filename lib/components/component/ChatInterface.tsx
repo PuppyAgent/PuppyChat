@@ -32,6 +32,9 @@ export interface ChatInterfaceProps {
   backgroundColor?: string
   bg?: string
   variant?: 'main' | 'bubble' | 'sidebar'
+  headerIcon?: string | React.ReactNode
+  headerIconSize?: number
+  showHeaderIcon?: boolean
 }
 
 // 添加一个全局标识符来避免重复添加样式
@@ -74,7 +77,10 @@ export default function ChatInterface({
   borderWidth = 16,
   backgroundColor = '#0D0D0D',
   bg,
-  variant = 'main'
+  variant = 'main',
+  headerIcon,
+  headerIconSize = 26,
+  showHeaderIcon = true
 }: ChatInterfaceProps = {}) {
   const resolvedBg = bg ?? backgroundColor
   // Create default initial messages using welcomeMessage
@@ -405,21 +411,40 @@ export default function ChatInterface({
       {/* Header */}
       {showHeader && (
         <div style={styles.header}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', height: '26px' }}>
-          <div style={{
-            width: '26px',
-            height: '26px',
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', height: `${headerIconSize}px` }}>
+          {showHeaderIcon && (
+            <div style={{
+              width: `${headerIconSize}px`,
+              height: `${headerIconSize}px`,
               borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              backgroundColor: '#2a2a2a',
-              boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)'
+              backgroundColor: headerIcon ? 'transparent' : '#2a2a2a',
+              boxShadow: headerIcon ? 'none' : 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+              overflow: 'hidden'
             }}>
-              <Bot style={{ width: '20px', height: '20px', color: '#8b8b8b' }} />
+              {headerIcon ? (
+                typeof headerIcon === 'string' ? (
+                  <img 
+                    src={headerIcon} 
+                    alt="Chat Icon" 
+                    style={{ 
+                      width: '100%', 
+                      height: '100%', 
+                      objectFit: 'cover' 
+                    }} 
+                  />
+                ) : (
+                  headerIcon
+                )
+              ) : (
+                <Bot style={{ width: `${headerIconSize * 0.77}px`, height: `${headerIconSize * 0.77}px`, color: '#8b8b8b' }} />
+              )}
             </div>
+          )}
             <div>
-            <div style={{ fontSize: '14px', fontWeight: 'normal', color: '#8b8b8b', margin: 0, height: '26px', lineHeight: '26px' }}>{title}</div>
+            <div style={{ fontSize: '14px', fontWeight: 'normal', color: '#8b8b8b', margin: 0, height: `${headerIconSize}px`, lineHeight: `${headerIconSize}px` }}>{title}</div>
             </div>
           </div>
           <button
